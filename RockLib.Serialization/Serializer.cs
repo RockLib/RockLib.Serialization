@@ -8,102 +8,218 @@ using RockLib.Immutable;
 
 namespace RockLib.Serialization
 {
+    /// <summary>
+    /// Provides a set of static methods for serialzing and deserializing.
+    /// </summary>
     public static class Serializer
     {
-        private static readonly Semimutable<IReadOnlyList<ISerializer>> _jsonSerializers = new Semimutable<IReadOnlyList<ISerializer>>(LoadJsonSerializers);
-        private static readonly Semimutable<IReadOnlyList<ISerializer>> _xmlSerializers = new Semimutable<IReadOnlyList<ISerializer>>(LoadXmlSerializers);
+        private static readonly Semimutable<Dictionary<string, ISerializer>> _jsonSerializers = new Semimutable<Dictionary<string, ISerializer>>(LoadJsonSerializers);
+        private static readonly Semimutable<Dictionary<string, ISerializer>> _xmlSerializers = new Semimutable<Dictionary<string, ISerializer>>(LoadXmlSerializers);
 
-        private static IReadOnlyList<ISerializer> LoadJsonSerializers()
+        /// <summary>
+        /// Gets the JSON serializers.
+        /// </summary>
+        public static IReadOnlyList<ISerializer> JsonSerializers => _jsonSerializers.Value.Values.ToList();
+
+        /// <summary>
+        /// Gets the XML serializers.
+        /// </summary>
+        public static IReadOnlyList<ISerializer> XmlSerializers => _xmlSerializers.Value.Values.ToList();
+
+        private static Dictionary<string, ISerializer> LoadJsonSerializers()
         {
-            var serializers = Config.Root.GetSection("RockLib.Serialization:JsonSerializers").Create<IReadOnlyList<ISerializer>>();
+            var serializers = Config.Root.GetSection("RockLib.Serialization:JsonSerializers")
+                .Create<List<ISerializer>>(new DefaultTypes().Add(typeof(ISerializer), typeof(DefaultJsonSerializer)));
+
             return serializers == null || serializers.Count == 0
-                ? new List<ISerializer> { new DefaultJsonSerializer() }
-                : serializers;
+                ? new Dictionary<string, ISerializer> { { "default", new DefaultJsonSerializer() } }
+                : serializers.ToDictionary(s => s.Name);
         }
 
-        private static IReadOnlyList<ISerializer> LoadXmlSerializers()
+        private static Dictionary<string, ISerializer> LoadXmlSerializers()
         {
-            var serializers = Config.Root.GetSection("RockLib.Serialization:XmlSerializers").Create<IReadOnlyList<ISerializer>>();
+            var serializers = Config.Root.GetSection("RockLib.Serialization:XmlSerializers")
+                .Create<IReadOnlyList<ISerializer>>(new DefaultTypes().Add(typeof(ISerializer), typeof(DefaultXmlSerializer)));
+
             return serializers == null || serializers.Count == 0
-                ? new List<ISerializer> { new DefaultXmlSerializer() }
-                : serializers;
+                ? new Dictionary<string, ISerializer> { { "default", new DefaultXmlSerializer() } }
+                : serializers.ToDictionary(s => s.Name);
         }
 
-        public static void SetJsonSerializers(IReadOnlyList<ISerializer> serializers) => _jsonSerializers.Value = serializers;
-        public static void SetXmlSerializers(IReadOnlyList<ISerializer> serializers) => _xmlSerializers.Value = serializers;
+        /// <summary>
+        /// Sets the JSON serializers.
+        /// NOTE: This can only be used until the serializers have been used, then it will be locked and throw an exception.
+        /// </summary>
+        /// <param name="serializers">The JSON serializers to be used in serialization and deserialization.</param>
+        public static void SetJsonSerializers(IEnumerable<ISerializer> serializers)
+            => _jsonSerializers.Value = serializers?.ToDictionary(s => s.Name) ?? throw new ArgumentNullException(nameof(serializers));
 
-        public static string ToJson<T>(this T item, string name = "default") => ToJson(item, typeof(T), name);
+        /// <summary>
+        /// Sets the XML serializers.
+        /// NOTE: This can only be used until the serializers have been used, then it will be locked and throw an exception.
+        /// </summary>
+        /// <param name="serializers">The XML serializers to be used in serialization and deserialization.</param>
+        public static void SetXmlSerializers(IEnumerable<ISerializer> serializers)
+            => _xmlSerializers.Value = serializers?.ToDictionary(s => s.Name) ?? throw new ArgumentNullException(nameof(serializers));
+
+        /// <summary>
+        /// Serializes an object of type T into a JSON string.
+        /// </summary>
+        /// <typeparam name="T">The type of object being serialized.</typeparam>
+        /// <param name="item">The object to serialize.</param>
+        /// <param name="name">The name of the serializer.</param>
+        /// <returns>A JSON string representing the serialized object.</returns>
+        public static string ToJson<T>(this T item, string name = "default")
+            => ToJson(item, typeof(T), name);
+
+        /// <summary>
+        /// Serializes an object of <paramref name="type"/> into a JSON string.
+        /// </summary>
+        /// <param name="item">The object to serialize.</param>
+        /// <param name="type">The type of the object being serialized.</param>
+        /// <param name="name">The name of the serializer.</param>
+        /// <returns>A JSON string representing the serialized object.</returns>
         public static string ToJson(this object item, Type type, string name = "default")
-        {
-            var serializer = _jsonSerializers.Value.FirstOrDefault(s => s.Name == name);
-            return serializer?.SerializeToString(item, type)
-                   ?? throw new Exception(); //TODO: Figure out the exception to throw
-        }
+            => _jsonSerializers.Value[name].SerializeToString(item, type);
 
-        public static void ToJson<T>(this T item, Stream stream, string name = "default") => ToJson(item, typeof(T), stream, name);
+        /// <summary>
+        /// Serializes an object of type T into a JSON stream.
+        /// </summary>
+        /// <typeparam name="T">The type of object being serialized.</typeparam>
+        /// <param name="item">The object to serialize.</param>
+        /// <param name="stream">The stream to serialize into.</param>
+        /// <param name="name">The name of the serializer.</param>
+        public static void ToJson<T>(this T item, Stream stream, string name = "default")
+            => ToJson(item, typeof(T), stream, name);
+
+        /// <summary>
+        /// Serializes an object of <paramref name="type"/> into a JSON stream.
+        /// </summary>
+        /// <param name="item">The object to serialize.</param>
+        /// <param name="type">The type of the object being serialized.</param>
+        /// <param name="stream">The stream to serialize into.</param>
+        /// <param name="name">The name of the serializer.</param>
         public static void ToJson(this object item, Type type, Stream stream, string name = "default")
-        {
-            var serializer = _jsonSerializers.Value.FirstOrDefault(s => s.Name == name);
-            if (serializer != null)
-                serializer.SerializeToStream(stream, item, type);
-            else
-                throw new Exception(); // TODO: Figure out the exception to throw
-        }
+            => _jsonSerializers.Value[name].SerializeToStream(stream, item, type);
 
-        public static string ToXml<T>(this T item, string name = "default") => ToXml(item, typeof(T), name);
+        /// <summary>
+        /// Serializes an object of type T into a XML string.
+        /// </summary>
+        /// <typeparam name="T">The type of object being serialized.</typeparam>
+        /// <param name="item">The object to serialize.</param>
+        /// <param name="name">The name of the serializer.</param>
+        /// <returns>An XML string representing the serialized object.</returns>
+        public static string ToXml<T>(this T item, string name = "default")
+            => ToXml(item, typeof(T), name);
+
+        /// <summary>
+        /// Serializes an object of <paramref name="type"/> into a XML string.
+        /// </summary>
+        /// <param name="item">The object to serialize.</param>
+        /// <param name="type">The type of the object being serialized.</param>
+        /// <param name="name">The name of the serializer.</param>
+        /// <returns>An XML string representing the serialized object.</returns>
         public static string ToXml(this object item, Type type, string name = "default")
-        {
-            var serializer = _xmlSerializers.Value.FirstOrDefault(s => s.Name == name);
-            return serializer?.SerializeToString(item, type)
-                   ?? throw new Exception(); //TODO: Figure out the exception to throw
-        }
+            => _xmlSerializers.Value[name].SerializeToString(item, type);
 
-        public static void ToXml<T>(this T item, Stream stream, string name = "default") => ToXml(item, typeof(T), stream, name);
+        /// <summary>
+        /// Serializes an object of type T into a XML string.
+        /// </summary>
+        /// <typeparam name="T">The type of object being serialized.</typeparam>
+        /// <param name="item">The object to serialize.</param>
+        /// <param name="stream">The stream to serialize into.</param>
+        /// <param name="name">The name of the serializer.</param>
+        public static void ToXml<T>(this T item, Stream stream, string name = "default")
+            => ToXml(item, typeof(T), stream, name);
+
+        /// <summary>
+        /// Serializes an object of <paramref name="type"/> into a XML string.
+        /// </summary>
+        /// <param name="item">The object to serialize.</param>
+        /// <param name="type">The type of the object being serialized.</param>
+        /// <param name="stream">The stream to serialize into.</param>
+        /// <param name="name">The name of the serializer.</param>
         public static void ToXml(this object item, Type type, Stream stream, string name = "default")
-        {
-            var serializer = _xmlSerializers.Value.FirstOrDefault(s => s.Name == name);
-            if (serializer != null)
-                serializer.SerializeToStream(stream, item, type);
-            else
-                throw new Exception(); // TODO: Figure out the exception to throw
-        }
+            => _xmlSerializers.Value[name].SerializeToStream(stream, item, type);
 
+        /// <summary>
+        /// Deserializes a JSON string into an object of type T.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to be deserialized into.</typeparam>
+        /// <param name="json">The JSON string to deserialize</param>
+        /// <param name="name">The name of the serializer</param>
+        /// <returns>An object of type T</returns>
         public static T FromJson<T>(this string json, string name = "default") where T : class
             => FromJson(json, typeof(T), name) as T;
-        public static object FromJson(this string json, Type type, string name = "default")
-        {
-            var serializer = _jsonSerializers.Value.FirstOrDefault(s => s.Name == name);
-            return serializer?.DeserializeFromString(json, type)
-                   ?? throw new Exception(); //TODO: Figure out the exception to throw
-        }
 
+        /// <summary>
+        /// Deserializes a JSON string into an object of <paramref name="type"/>.
+        /// </summary>
+        /// <param name="json">The JSON string to deserialize.</param>
+        /// <param name="type">The type of the object to be deserialized into.</param>
+        /// <param name="name">The name of the serializer.</param>
+        /// <returns>An object of given <paramref name="type"/></returns>
+        public static object FromJson(this string json, Type type, string name = "default")
+            => _jsonSerializers.Value[name].DeserializeFromString(json, type);
+
+        /// <summary>
+        /// Deserializes a JSON stream into an object of type T.
+        /// </summary>
+        /// <typeparam name="T">TThe type of the object to be deserialized into.</typeparam>
+        /// <param name="stream">The stream to read the JSON from.</param>
+        /// <param name="name">The name of the serializer.</param>
+        /// <returns>An object of type T.</returns>
         public static T FromJson<T>(this Stream stream, string name = "default") where T : class
             => FromJson(stream, typeof(T), name) as T;
-        public static object FromJson(this Stream stream, Type type, string name = "default")
-        {
-            var serializer = _jsonSerializers.Value.FirstOrDefault(s => s.Name == name);
-            if (serializer != null)
-                return serializer.DeserializeFromStream(stream, type);
-            throw new Exception(); // TODO: Figure out the exception to throw
-        }
 
+        /// <summary>
+        /// Deserializes a JSON stream into an object of <paramref name="type"/>.
+        /// </summary>
+        /// <param name="stream">The stream to read the JSON from.</param>
+        /// <param name="type">The type of the object to be deserialized into.</param>
+        /// <param name="name">The name of the serializer.</param>
+        /// <returns>An object of given <paramref name="type"/>.</returns>
+        public static object FromJson(this Stream stream, Type type, string name = "default")
+            => _jsonSerializers.Value[name].DeserializeFromStream(stream, type);
+
+        /// <summary>
+        /// Deserializes an XML string into an object of type T.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to be deserialized into.</typeparam>
+        /// <param name="xml">The XML string to deserialize</param>
+        /// <param name="name">The name of the serializer</param>
+        /// <returns>An object of type T</returns>
         public static T FromXml<T>(this string xml, string name = "default") where T : class
             => FromXml(xml, typeof(T), name) as T;
-        public static object FromXml(this string xml, Type type, string name = "default")
-        {
-            var serializer = _xmlSerializers.Value.FirstOrDefault(s => s.Name == name);
-            return serializer?.DeserializeFromString(xml, type)
-                   ?? throw new Exception(); //TODO: Figure out the exception to throw
-        }
 
+        /// <summary>
+        /// Deserializes an XML string into an object of <paramref name="type"/>.
+        /// </summary>
+        /// <param name="xml">The XML string to deserialize.</param>
+        /// <param name="type">The type of the object to be deserialized into.</param>
+        /// <param name="name">The name of the serializer.</param>
+        /// <returns>An object of given <paramref name="type"/></returns>
+        public static object FromXml(this string xml, Type type, string name = "default")
+            => _xmlSerializers.Value[name].DeserializeFromString(xml, type);
+
+        /// <summary>
+        /// Deserializes an XML stream into an object of type T.
+        /// </summary>
+        /// <typeparam name="T">TThe type of the object to be deserialized into.</typeparam>
+        /// <param name="stream">The stream to read the XML from.</param>
+        /// <param name="name">The name of the serializer.</param>
+        /// <returns>An object of type T.</returns>
         public static T FromXml<T>(this Stream stream, string name = "default") where T : class
             => FromXml(stream, typeof(T), name) as T;
+
+        /// <summary>
+        /// Deserializes an XML stream into an object of <paramref name="type"/>.
+        /// </summary>
+        /// <param name="stream">The stream to read the XML from.</param>
+        /// <param name="type">The type of the object to be deserialized into.</param>
+        /// <param name="name">The name of the serializer.</param>
+        /// <returns>An object of given <paramref name="type"/>.</returns>
         public static object FromXml(this Stream stream, Type type, string name = "default")
-        {
-            var serializer = _xmlSerializers.Value.FirstOrDefault(s => s.Name == name);
-            if (serializer != null)
-                return serializer.DeserializeFromStream(stream, type);
-            throw new Exception(); // TODO: Figure out the exception to throw
-        }
+            => _xmlSerializers.Value[name].DeserializeFromStream(stream, type);
     }
 }

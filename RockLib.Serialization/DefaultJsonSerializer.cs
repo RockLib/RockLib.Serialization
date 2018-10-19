@@ -5,10 +5,11 @@ using Newtonsoft.Json;
 
 namespace RockLib.Serialization
 {
+    /// <summary>
+    /// A JSON implementation of the <see cref="ISerializer"/> interface using <see cref="Newtonsoft.Json.JsonSerializer"/>.
+    /// </summary>
     public class DefaultJsonSerializer : ISerializer
     {
-        private readonly JsonSerializer _serializer;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultJsonSerializer"/> class.
         /// </summary>
@@ -16,9 +17,9 @@ namespace RockLib.Serialization
         /// <param name="settings">Newtonsoft settings for the serializer.</param>
         public DefaultJsonSerializer(string name = "default", JsonSerializerSettings settings = null)
         {
-            Name = name;
+            Name = name ?? "default";
 
-            _serializer =
+            JsonSerializer =
                 settings == null
                     ? JsonSerializer.CreateDefault()
                     : JsonSerializer.Create(settings);
@@ -26,16 +27,18 @@ namespace RockLib.Serialization
 
         /// <inheritdoc />
         public string Name { get; }
+        
+        /// <summary>
+        /// Gets the <see cref="JsonSerializer"/> used when serializing.
+        /// </summary>
+        public JsonSerializer JsonSerializer { get; }
 
         /// <inheritdoc />
         public void SerializeToStream(Stream stream, object item, Type type)
         {
             using (var writer = new StreamWriter(stream))
             using (var jsonWriter = new JsonTextWriter(writer))
-            {
-                _serializer.Serialize(jsonWriter, item);
-                jsonWriter.Flush();
-            }
+                JsonSerializer.Serialize(jsonWriter, item);
         }
 
         /// <inheritdoc />
@@ -43,7 +46,7 @@ namespace RockLib.Serialization
         {
             using (var reader = new StreamReader(stream))
             using (var jsonReader = new JsonTextReader(reader))
-                return _serializer.Deserialize(jsonReader, type);
+                return JsonSerializer.Deserialize(jsonReader, type);
         }
 
         /// <inheritdoc />
@@ -53,7 +56,7 @@ namespace RockLib.Serialization
 
             using (var stringWriter = new StringWriter(builder))
             using (var jsonWriter = new JsonTextWriter(stringWriter))
-                _serializer.Serialize(jsonWriter, item, type);
+                JsonSerializer.Serialize(jsonWriter, item, type);
 
             return builder.ToString();
         }
@@ -63,7 +66,7 @@ namespace RockLib.Serialization
         {
             using (var stringReader = new StringReader(data))
             using (var jsonReader = new JsonTextReader(stringReader))
-                return _serializer.Deserialize(jsonReader, type);
+                return JsonSerializer.Deserialize(jsonReader, type);
         }
     }
 }
