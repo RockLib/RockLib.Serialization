@@ -19,12 +19,12 @@ namespace RockLib.Serialization
         /// <summary>
         /// Gets the JSON serializers.
         /// </summary>
-        public static IReadOnlyList<ISerializer> JsonSerializers => _jsonSerializers.Value.Values.ToList();
+        public static IReadOnlyCollection<ISerializer> JsonSerializers => _jsonSerializers.Value.Values;
 
         /// <summary>
         /// Gets the XML serializers.
         /// </summary>
-        public static IReadOnlyList<ISerializer> XmlSerializers => _xmlSerializers.Value.Values.ToList();
+        public static IReadOnlyCollection<ISerializer> XmlSerializers => _xmlSerializers.Value.Values;
 
         private static Dictionary<string, ISerializer> LoadJsonSerializers()
         {
