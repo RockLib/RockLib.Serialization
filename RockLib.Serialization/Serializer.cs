@@ -48,20 +48,20 @@ namespace RockLib.Serialization
         }
 
         /// <summary>
-        /// Sets the JSON serializers.
+        /// Sets the JSON serializers. Defaults to using configuration if null is passed in.
         /// NOTE: This can only be used until the serializers have been used, then it will be locked and throw an exception.
         /// </summary>
         /// <param name="serializers">The JSON serializers to be used in serialization and deserialization.</param>
-        public static void SetJsonSerializers(IEnumerable<ISerializer> serializers)
-            => _jsonSerializers.Value = serializers?.ToDictionary(s => s.Name) ?? throw new ArgumentNullException(nameof(serializers));
+        public static void SetJsonSerializers(IEnumerable<ISerializer> serializers = null)
+            => _jsonSerializers.Value = serializers?.ToDictionary(s => s.Name) ?? LoadJsonSerializers();
 
         /// <summary>
-        /// Sets the XML serializers.
+        /// Sets the XML serializers. Defaults to using configuration if null is passed in.
         /// NOTE: This can only be used until the serializers have been used, then it will be locked and throw an exception.
         /// </summary>
         /// <param name="serializers">The XML serializers to be used in serialization and deserialization.</param>
-        public static void SetXmlSerializers(IEnumerable<ISerializer> serializers)
-            => _xmlSerializers.Value = serializers?.ToDictionary(s => s.Name) ?? throw new ArgumentNullException(nameof(serializers));
+        public static void SetXmlSerializers(IEnumerable<ISerializer> serializers = null)
+            => _xmlSerializers.Value = serializers?.ToDictionary(s => s.Name) ?? LoadXmlSerializers();
 
         /// <summary>
         /// Serializes an object of type T into a JSON string.
