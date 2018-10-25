@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using RockLib.Configuration;
@@ -19,12 +20,12 @@ namespace RockLib.Serialization
         /// <summary>
         /// Gets the JSON serializers.
         /// </summary>
-        public static IReadOnlyCollection<ISerializer> JsonSerializers => _jsonSerializers.Value.Values;
+        public static IReadOnlyCollection<ISerializer> JsonSerializers => new ReadOnlyCollection<ISerializer>(_jsonSerializers.Value.Values.ToList());
 
         /// <summary>
         /// Gets the XML serializers.
         /// </summary>
-        public static IReadOnlyCollection<ISerializer> XmlSerializers => _xmlSerializers.Value.Values;
+        public static IReadOnlyCollection<ISerializer> XmlSerializers => new ReadOnlyCollection<ISerializer>(_xmlSerializers.Value.Values.ToList());
 
         private static Dictionary<string, ISerializer> LoadJsonSerializers()
         {
