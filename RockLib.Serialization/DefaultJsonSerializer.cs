@@ -22,7 +22,7 @@ namespace RockLib.Serialization
             JsonSerializer =
                 settings == null
                     ? JsonSerializer.CreateDefault()
-                    : JsonSerializer.Create(settings);
+                    : JsonSerializer.CreateDefault(settings);
         }
 
         /// <inheritdoc />
