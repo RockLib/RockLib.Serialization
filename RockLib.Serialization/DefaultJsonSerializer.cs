@@ -10,6 +10,8 @@ namespace RockLib.Serialization
     /// </summary>
     public class DefaultJsonSerializer : ISerializer
     {
+        private static readonly UTF8Encoding _streamEncoding = new UTF8Encoding(false, true);
+        private static readonly int _streamBufferSize = 1024;
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultJsonSerializer"/> class.
         /// </summary>
@@ -43,7 +45,7 @@ namespace RockLib.Serialization
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            using (var writer = new StreamWriter(stream))
+            using (var writer = new StreamWriter(stream, _streamEncoding, _streamBufferSize, true))
             using (var jsonWriter = new JsonTextWriter(writer))
                 JsonSerializer.Serialize(jsonWriter, item);
         }
@@ -56,7 +58,7 @@ namespace RockLib.Serialization
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            using (var reader = new StreamReader(stream))
+            using (var reader = new StreamReader(stream, _streamEncoding, true, _streamBufferSize, true))
             using (var jsonReader = new JsonTextReader(reader))
                 return JsonSerializer.Deserialize(jsonReader, type);
         }
