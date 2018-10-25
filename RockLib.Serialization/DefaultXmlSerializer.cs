@@ -50,6 +50,13 @@ namespace RockLib.Serialization
         /// <inheritdoc />
         public void SerializeToStream(Stream stream, object item, Type type)
         {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             type = CheckType(type, item);
 
             if (WriterSettings == null)
@@ -62,6 +69,11 @@ namespace RockLib.Serialization
         /// <inheritdoc />
         public object DeserializeFromStream(Stream stream, Type type)
         {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             if (ReaderSettings == null)
                 return new XmlSerializer(type).Deserialize(stream);
 
@@ -72,6 +84,11 @@ namespace RockLib.Serialization
         /// <inheritdoc />
         public string SerializeToString(object item, Type type)
         {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             type = CheckType(type, item);
 
             var builder = new StringBuilder();
@@ -88,6 +105,11 @@ namespace RockLib.Serialization
         /// <inheritdoc />
         public object DeserializeFromString(string data, Type type)
         {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             if (ReaderSettings == null)
                 using (var reader = new StringReader(data))
                     return new XmlSerializer(type).Deserialize(reader);

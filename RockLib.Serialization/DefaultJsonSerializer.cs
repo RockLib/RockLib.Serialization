@@ -36,6 +36,13 @@ namespace RockLib.Serialization
         /// <inheritdoc />
         public void SerializeToStream(Stream stream, object item, Type type)
         {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             using (var writer = new StreamWriter(stream))
             using (var jsonWriter = new JsonTextWriter(writer))
                 JsonSerializer.Serialize(jsonWriter, item);
@@ -44,6 +51,11 @@ namespace RockLib.Serialization
         /// <inheritdoc />
         public object DeserializeFromStream(Stream stream, Type type)
         {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             using (var reader = new StreamReader(stream))
             using (var jsonReader = new JsonTextReader(reader))
                 return JsonSerializer.Deserialize(jsonReader, type);
@@ -52,6 +64,11 @@ namespace RockLib.Serialization
         /// <inheritdoc />
         public string SerializeToString(object item, Type type)
         {
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             var builder = new StringBuilder();
 
             using (var stringWriter = new StringWriter(builder))
@@ -64,6 +81,11 @@ namespace RockLib.Serialization
         /// <inheritdoc />
         public object DeserializeFromString(string data, Type type)
         {
+            if (data == null)
+                throw new ArgumentNullException(nameof(data));
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             using (var stringReader = new StringReader(data))
             using (var jsonReader = new JsonTextReader(stringReader))
                 return JsonSerializer.Deserialize(jsonReader, type);
