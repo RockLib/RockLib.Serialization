@@ -11,7 +11,8 @@ namespace RockLib.Serialization
     public class DefaultJsonSerializer : ISerializer
     {
         private static readonly UTF8Encoding _streamEncoding = new UTF8Encoding(false, true);
-        private static readonly int _streamBufferSize = 1024;
+        private const int _streamBufferSize = 1024;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultJsonSerializer"/> class.
         /// </summary>
