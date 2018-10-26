@@ -5,19 +5,14 @@ using System.Xml;
 using FluentAssertions;
 using Xunit;
 
-namespace RockLib.Serialization.UnitTests
+namespace RockLib.Serialization.Tests
 {
     public class DefaultXmlSerializerTests
     {
         private readonly TypeForXmlSerializer _expectedItem = new TypeForXmlSerializer { PropA = 5, PropB = true, PropC = "PropC" };
-        private readonly string _streamHeader = @"<?xml version=""1.0""?>";
+        private readonly string _streamHeader = @"<?xml version=""1.0"" encoding=""utf-8""?>";
         private readonly string _stringHeader = @"<?xml version=""1.0"" encoding=""utf-16""?>";
-        private readonly string _expectedXmlFormat = @"{0}
-<TypeForXmlSerializer xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">
-  <PropA>5</PropA>
-  <PropB>true</PropB>
-  <PropC>PropC</PropC>
-</TypeForXmlSerializer>";
+        private readonly string _expectedXmlFormat = @"{0}<TypeForXmlSerializer xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema""><PropA>5</PropA><PropB>true</PropB><PropC>PropC</PropC></TypeForXmlSerializer>";
 
         [Fact]
         public void EmptyConstructorCreatesDefaultValues()
@@ -44,7 +39,7 @@ namespace RockLib.Serialization.UnitTests
             var name = "notdefault";
             var xmlWriterSettings = new XmlWriterSettings();
             var xmlReaderSettings = new XmlReaderSettings();
-            var nameSpaces = new [] { new XmlQualifiedName("Name1", "Namespace1"), new XmlQualifiedName("Name2", "Namespace2") };
+            var nameSpaces = new[] { new XmlQualifiedName("Name1", "Namespace1"), new XmlQualifiedName("Name2", "Namespace2") };
 
             var serializer = new DefaultXmlSerializer(name, nameSpaces, xmlWriterSettings, xmlReaderSettings);
 
@@ -130,7 +125,7 @@ namespace RockLib.Serialization.UnitTests
         [Fact]
         public void SerializeToStreamSerializesCorrectly()
         {
-            var serializer = new DefaultXmlSerializer();
+            var serializer = new DefaultXmlSerializer(writerSettings: new XmlWriterSettings { Encoding = Encoding.Default});
 
             using (var stream = new MemoryStream())
             {
@@ -169,7 +164,7 @@ namespace RockLib.Serialization.UnitTests
         [Fact]
         public void SerializeToStringSerializesCorrectly()
         {
-            var serializer = new DefaultXmlSerializer();
+            var serializer = new DefaultXmlSerializer(writerSettings: new XmlWriterSettings());
 
             var xml = serializer.SerializeToString(_expectedItem, typeof(TypeForXmlSerializer));
 

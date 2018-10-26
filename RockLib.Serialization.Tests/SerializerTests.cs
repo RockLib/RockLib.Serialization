@@ -10,7 +10,7 @@ using RockLib.Configuration;
 using RockLib.Immutable;
 using Xunit;
 
-namespace RockLib.Serialization.UnitTests
+namespace RockLib.Serialization.Tests
 {
     public class SerializerTests
     {

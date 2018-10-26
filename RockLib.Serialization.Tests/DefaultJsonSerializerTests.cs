@@ -5,7 +5,7 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace RockLib.Serialization.UnitTests
+namespace RockLib.Serialization.Tests
 {
     public class DefaultJsonSerializerTests
     {
