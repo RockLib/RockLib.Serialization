@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization", "Ro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DotNetCore", "Example.Serialization.DotNetCore\Example.Serialization.DotNetCore.csproj", "{3528C15B-7B54-4C2C-92BB-0892E9D80DBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockLib.Serialization.UnitTests", "RockLib.Serialization.UnitTests\RockLib.Serialization.UnitTests.csproj", "{4735BE45-0672-400B-B671-5AB83B3ADFE6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.Tests", "RockLib.Serialization.Tests\RockLib.Serialization.Tests.csproj", "{4735BE45-0672-400B-B671-5AB83B3ADFE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
