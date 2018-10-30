@@ -78,7 +78,7 @@ namespace RockLib.Serialization.DataContract
             {
                 serializer.WriteObject(stream, item);
                 stream.Flush();
-                return Encoding.Default.GetString(stream.ToArray());
+                return Encoding.UTF8.GetString(stream.ToArray());
             }
         }
 
@@ -94,7 +94,7 @@ namespace RockLib.Serialization.DataContract
                 ? new SystemJson.DataContractJsonSerializer(type)
                 : new SystemJson.DataContractJsonSerializer(type, Settings);
 
-            using (var stream = new MemoryStream(Encoding.Default.GetBytes(data)))
+            using (var stream = new MemoryStream(Encoding.UTF8.GetBytes(data)))
             {
                 return serializer.ReadObject(stream);
             }

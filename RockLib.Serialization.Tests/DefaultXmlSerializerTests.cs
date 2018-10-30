@@ -125,7 +125,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStreamSerializesCorrectly()
         {
-            var serializer = new DefaultXmlSerializer(writerSettings: new XmlWriterSettings { Encoding = Encoding.Default});
+            var serializer = new DefaultXmlSerializer(writerSettings: new XmlWriterSettings { Encoding = Encoding.UTF8});
 
             using (var stream = new MemoryStream())
             {
