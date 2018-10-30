@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net462;net451</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>RockLib.Serialization.XSerializer</PackageId>
+    <PackageVersion>1.0.0-alpha01</PackageVersion>
+    <Authors>Quicken Loans</Authors>
+    <Description>An XSerializer implmentation of the RockLib.Serialization.ISerializer.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/RockLib/RockLib.Serialization/tree/master/RockLib.Serialization</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/RockLib/RockLib.Serialization/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright 2017-2018 (c) Quicken Loans Corporation. All rights reserved.</Copyright>
+    <PackageTags>RockLib Serialization XSerializer</PackageTags>
+    <Version>1.0.0</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\RockLib.Serialization.XSerializer.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RockLib.Serialization" Version="1.0.0-alpha01" />
+    <PackageReference Include="XSerializer" Version="0.4.2" />
+  </ItemGroup>
+
+</Project>

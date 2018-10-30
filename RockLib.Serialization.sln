@@ -9,6 +9,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DotNe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.Tests", "RockLib.Serialization.Tests\RockLib.Serialization.Tests.csproj", "{4735BE45-0672-400B-B671-5AB83B3ADFE6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.XSerializer", "RockLib.Serialization.XSerializer\RockLib.Serialization.XSerializer.csproj", "{38BA53E9-5C50-4AAC-B9F3-514AC4819651}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.XSerializer.Tests", "RockLib.Serialization.XSerializer.Tests\RockLib.Serialization.XSerializer.Tests.csproj", "{28F40289-9DC4-4EA2-AA08-09554DF3F0B3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract", "RockLib.Serialization.DataContract\RockLib.Serialization.DataContract.csproj", "{A3F8D9DE-2A87-4505-B956-34B3102A4906}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockLib.Serialization.DataContract.Tests", "RockLib.Serialization.DataContract.Tests\RockLib.Serialization.DataContract.Tests.csproj", "{B5307852-10FB-4B48-AE84-DA79E4CA11A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +35,22 @@ Global
 		{4735BE45-0672-400B-B671-5AB83B3ADFE6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4735BE45-0672-400B-B671-5AB83B3ADFE6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4735BE45-0672-400B-B671-5AB83B3ADFE6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38BA53E9-5C50-4AAC-B9F3-514AC4819651}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38BA53E9-5C50-4AAC-B9F3-514AC4819651}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38BA53E9-5C50-4AAC-B9F3-514AC4819651}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38BA53E9-5C50-4AAC-B9F3-514AC4819651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28F40289-9DC4-4EA2-AA08-09554DF3F0B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28F40289-9DC4-4EA2-AA08-09554DF3F0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28F40289-9DC4-4EA2-AA08-09554DF3F0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28F40289-9DC4-4EA2-AA08-09554DF3F0B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3F8D9DE-2A87-4505-B956-34B3102A4906}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3F8D9DE-2A87-4505-B956-34B3102A4906}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3F8D9DE-2A87-4505-B956-34B3102A4906}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3F8D9DE-2A87-4505-B956-34B3102A4906}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,34 +1,33 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.Serialization;
 using System.Text;
-using System.Xml;
 using FluentAssertions;
 using Xunit;
 
-namespace RockLib.Serialization.Tests
+namespace RockLib.Serialization.DataContract.Tests
 {
-    public class DefaultXmlSerializerTests
+    public class DataContractXmlSerializerTests
     {
         private readonly TypeForXmlSerializer _expectedItem = new TypeForXmlSerializer { PropA = 5, PropB = true, PropC = "PropC" };
         private readonly string _streamHeader = @"<?xml version=""1.0"" encoding=""utf-8""?>";
         private readonly string _stringHeader = @"<?xml version=""1.0"" encoding=""utf-16""?>";
-        private readonly string _expectedXmlFormat = @"{0}<TypeForXmlSerializer xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema""><PropA>5</PropA><PropB>true</PropB><PropC>PropC</PropC></TypeForXmlSerializer>";
+        private readonly string _expectedXmlFormat = @"{0}<DataContractXmlSerializerTests.TypeForXmlSerializer xmlns:i=""http://www.w3.org/2001/XMLSchema-instance"" xmlns=""http://schemas.datacontract.org/2004/07/RockLib.Serialization.DataContract.Tests""><PropA>5</PropA><PropB>true</PropB><PropC>PropC</PropC></DataContractXmlSerializerTests.TypeForXmlSerializer>";
+        private readonly string _expectedStreamXml = @"<DataContractXmlSerializerTests.TypeForXmlSerializer xmlns=""http://schemas.datacontract.org/2004/07/RockLib.Serialization.DataContract.Tests"" xmlns:i=""http://www.w3.org/2001/XMLSchema-instance""><PropA>5</PropA><PropB>true</PropB><PropC>PropC</PropC></DataContractXmlSerializerTests.TypeForXmlSerializer>";
 
         [Fact]
         public void EmptyConstructorCreatesDefaultValues()
         {
-            var serializer = new DefaultXmlSerializer();
+            var serializer = new DataContractXmlSerializer();
 
             serializer.Name.Should().Be("default");
-            serializer.WriterSettings.Should().BeNull();
-            serializer.ReaderSettings.Should().BeNull();
-            serializer.Namespaces.Should().BeNull();
+            serializer.Settings.Should().BeNull();
         }
 
         [Fact]
         public void ConstructorWithNullNameCreatesDefaultName()
         {
-            var serializer = new DefaultXmlSerializer(null);
+            var serializer = new DataContractXmlSerializer(null);
 
             serializer.Name.Should().Be("default");
         }
@@ -37,23 +36,19 @@ namespace RockLib.Serialization.Tests
         public void ConstructorPassesValuesCorrectly()
         {
             var name = "notdefault";
-            var xmlWriterSettings = new XmlWriterSettings();
-            var xmlReaderSettings = new XmlReaderSettings();
-            var nameSpaces = new[] { new XmlQualifiedName("Name1", "Namespace1"), new XmlQualifiedName("Name2", "Namespace2") };
+            var options = new DataContractSerializerSettings();
 
-            var serializer = new DefaultXmlSerializer(name, nameSpaces, xmlWriterSettings, xmlReaderSettings);
+            var serializer = new DataContractXmlSerializer(name, options);
 
             serializer.Name.Should().Be(name);
-            serializer.ReaderSettings.Should().BeSameAs(xmlReaderSettings);
-            serializer.WriterSettings.Should().BeSameAs(xmlWriterSettings);
-            serializer.Namespaces.ToArray().Should().BeEquivalentTo(nameSpaces);
-
+            serializer.Settings.Should().NotBeNull();
+            serializer.Settings.Should().BeSameAs(options);
         }
 
         [Fact]
         public void SerializeToStreamThrowWhenStreamIsNull()
         {
-            Action action = () => new DefaultXmlSerializer().SerializeToStream(null, new object(), typeof(object));
+            Action action = () => new DataContractXmlSerializer().SerializeToStream(null, new object(), typeof(object));
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: stream");
         }
@@ -61,7 +56,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStreamThrowWhenItemIsNull()
         {
-            Action action = () => new DefaultXmlSerializer().SerializeToStream(new MemoryStream(), null, typeof(object));
+            Action action = () => new DataContractXmlSerializer().SerializeToStream(new MemoryStream(), null, typeof(object));
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: item");
         }
@@ -69,7 +64,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStreamThrowWhenTypeIsNull()
         {
-            Action action = () => new DefaultXmlSerializer().SerializeToStream(new MemoryStream(), new object(), null);
+            Action action = () => new DataContractXmlSerializer().SerializeToStream(new MemoryStream(), new object(), null);
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
         }
@@ -77,7 +72,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void DeserializeFromStreamThrowWhenStreamIsNull()
         {
-            Action action = () => new DefaultXmlSerializer().DeserializeFromStream(null, typeof(object));
+            Action action = () => new DataContractXmlSerializer().DeserializeFromStream(null, typeof(object));
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: stream");
         }
@@ -85,7 +80,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void DeserializeFromStreamThrowWhenTypeIsNull()
         {
-            Action action = () => new DefaultXmlSerializer().DeserializeFromStream(new MemoryStream(), null);
+            Action action = () => new DataContractXmlSerializer().DeserializeFromStream(new MemoryStream(), null);
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
         }
@@ -93,7 +88,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStringThrowWhenItemIsNull()
         {
-            Action action = () => new DefaultXmlSerializer().SerializeToString(null, typeof(object));
+            Action action = () => new DataContractXmlSerializer().SerializeToString(null, typeof(object));
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: item");
         }
@@ -101,7 +96,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStringThrowWhenTypeIsNull()
         {
-            Action action = () => new DefaultXmlSerializer().SerializeToString(new object(), null);
+            Action action = () => new DataContractXmlSerializer().SerializeToString(new object(), null);
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
         }
@@ -109,7 +104,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void DeserializeFromStringThrowWhenItemIsNull()
         {
-            Action action = () => new DefaultXmlSerializer().DeserializeFromString(null, typeof(object));
+            Action action = () => new DataContractXmlSerializer().DeserializeFromString(null, typeof(object));
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: data");
         }
@@ -117,7 +112,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void DeserializeFromStringThrowWhenTypeIsNull()
         {
-            Action action = () => new DefaultXmlSerializer().DeserializeFromString("", null);
+            Action action = () => new DataContractXmlSerializer().DeserializeFromString("", null);
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
         }
@@ -125,7 +120,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStreamSerializesCorrectly()
         {
-            var serializer = new DefaultXmlSerializer(writerSettings: new XmlWriterSettings { Encoding = Encoding.UTF8});
+            var serializer = new DataContractXmlSerializer();
 
             using (var stream = new MemoryStream())
             {
@@ -135,7 +130,7 @@ namespace RockLib.Serialization.Tests
                 {
                     stream.Seek(0, SeekOrigin.Begin);
                     var xml = streamReader.ReadToEnd();
-                    xml.Should().Be(string.Format(_expectedXmlFormat, _streamHeader));
+                    xml.Should().Be(_expectedStreamXml);
                 }
             }
         }
@@ -143,7 +138,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void DeserializeFromStreamDeserializesCorrectly()
         {
-            var serializer = new DefaultXmlSerializer();
+            var serializer = new DataContractXmlSerializer();
 
             TypeForXmlSerializer item;
             using (var stream = new MemoryStream())
@@ -164,7 +159,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStringSerializesCorrectly()
         {
-            var serializer = new DefaultXmlSerializer(writerSettings: new XmlWriterSettings());
+            var serializer = new DataContractXmlSerializer();
 
             var xml = serializer.SerializeToString(_expectedItem, typeof(TypeForXmlSerializer));
 
@@ -174,7 +169,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void DeserializeFromStringDeserializesCorrectly()
         {
-            var serializer = new DefaultXmlSerializer();
+            var serializer = new DataContractXmlSerializer();
 
             var item = serializer.DeserializeFromString(string.Format(_expectedXmlFormat, _stringHeader), typeof(TypeForXmlSerializer)) as TypeForXmlSerializer;
 
@@ -182,10 +177,14 @@ namespace RockLib.Serialization.Tests
             item.Should().BeEquivalentTo(_expectedItem);
         }
 
+        [DataContract]
         public class TypeForXmlSerializer
         {
+            [DataMember]
             public int PropA { get; set; }
+            [DataMember]
             public bool PropB { get; set; }
+            [DataMember]
             public string PropC { get; set; }
         }
     }
