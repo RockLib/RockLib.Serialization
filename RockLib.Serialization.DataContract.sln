@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract", "RockLib.Serialization.DataContract\RockLib.Serialization.DataContract.csproj", "{A3F8D9DE-2A87-4505-B956-34B3102A4906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockLib.Serialization.DataContract.Tests", "RockLib.Serialization.DataContract.Tests\RockLib.Serialization.DataContract.Tests.csproj", "{B5307852-10FB-4B48-AE84-DA79E4CA11A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract.Tests", "RockLib.Serialization.DataContract.Tests\RockLib.Serialization.DataContract.Tests.csproj", "{B5307852-10FB-4B48-AE84-DA79E4CA11A5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DataContract.DotNetCore", "Example.Serialization.DataContract.DotNetCore\Example.Serialization.DataContract.DotNetCore.csproj", "{76DC1ABC-EA77-401C-9F11-8D576717AF00}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76DC1ABC-EA77-401C-9F11-8D576717AF00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76DC1ABC-EA77-401C-9F11-8D576717AF00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76DC1ABC-EA77-401C-9F11-8D576717AF00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76DC1ABC-EA77-401C-9F11-8D576717AF00}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
