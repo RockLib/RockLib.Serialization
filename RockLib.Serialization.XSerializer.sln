@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.XSeri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.XSerializer.Tests", "RockLib.Serialization.XSerializer.Tests\RockLib.Serialization.XSerializer.Tests.csproj", "{28F40289-9DC4-4EA2-AA08-09554DF3F0B3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.XSerializer.DotNetCore", "Example.Serialization.XSerializer.DotNetCore\Example.Serialization.XSerializer.DotNetCore.csproj", "{02E7CB1D-6F2E-433A-A93A-B83E4F212246}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{28F40289-9DC4-4EA2-AA08-09554DF3F0B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28F40289-9DC4-4EA2-AA08-09554DF3F0B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28F40289-9DC4-4EA2-AA08-09554DF3F0B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02E7CB1D-6F2E-433A-A93A-B83E4F212246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02E7CB1D-6F2E-433A-A93A-B83E4F212246}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02E7CB1D-6F2E-433A-A93A-B83E4F212246}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02E7CB1D-6F2E-433A-A93A-B83E4F212246}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -15,7 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.XSeri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract", "RockLib.Serialization.DataContract\RockLib.Serialization.DataContract.csproj", "{A3F8D9DE-2A87-4505-B956-34B3102A4906}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RockLib.Serialization.DataContract.Tests", "RockLib.Serialization.DataContract.Tests\RockLib.Serialization.DataContract.Tests.csproj", "{B5307852-10FB-4B48-AE84-DA79E4CA11A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract.Tests", "RockLib.Serialization.DataContract.Tests\RockLib.Serialization.DataContract.Tests.csproj", "{B5307852-10FB-4B48-AE84-DA79E4CA11A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Serialization.XSerializer.DotNetCore", "Example.Serialization.XSerializer.DotNetCore\Example.Serialization.XSerializer.DotNetCore.csproj", "{63D2BA7A-9463-4B33-97BA-15BDDA051C3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Serialization.DataContract.DotNetCore", "Example.Serialization.DataContract.DotNetCore\Example.Serialization.DataContract.DotNetCore.csproj", "{0CF82C8D-0735-402E-8DA8-75217C1DE174}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +55,14 @@ Global
 		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63D2BA7A-9463-4B33-97BA-15BDDA051C3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63D2BA7A-9463-4B33-97BA-15BDDA051C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63D2BA7A-9463-4B33-97BA-15BDDA051C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63D2BA7A-9463-4B33-97BA-15BDDA051C3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF82C8D-0735-402E-8DA8-75217C1DE174}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CF82C8D-0735-402E-8DA8-75217C1DE174}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF82C8D-0735-402E-8DA8-75217C1DE174}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CF82C8D-0735-402E-8DA8-75217C1DE174}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
