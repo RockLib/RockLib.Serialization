@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RockLib.Serialization" Version="1.0.0-alpha01" />
+    <PackageReference Include="RockLib.Serialization" Version="1.0.0" />
     <PackageReference Include="XSerializer" Version="0.4.2" />
   </ItemGroup>
 

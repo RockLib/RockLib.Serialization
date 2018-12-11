@@ -23,22 +23,8 @@
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\RockLib.Serialization.DataContract.xml</DocumentationFile>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="RockLib.Serialization">
-      <Version>1.0.0-alpha01</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net451'">
-    <PackageReference Include="RockLib.Serialization">
-      <Version>1.0.0-alpha01</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
-    <PackageReference Include="RockLib.Serialization">
-      <Version>1.0.0-alpha01</Version>
-    </PackageReference>
+  <ItemGroup>
+    <PackageReference Include="RockLib.Serialization" Version="1.0.0" />
   </ItemGroup>
 
 </Project>
