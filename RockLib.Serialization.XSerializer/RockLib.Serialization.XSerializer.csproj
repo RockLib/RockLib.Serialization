@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <PackageId>RockLib.Serialization.XSerializer</PackageId>
-    <PackageVersion>1.0.0-alpha01</PackageVersion>
+    <PackageVersion>1.0.0</PackageVersion>
     <Authors>Quicken Loans</Authors>
     <Description>An XSerializer implmentation of the RockLib.Serialization.ISerializer.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
