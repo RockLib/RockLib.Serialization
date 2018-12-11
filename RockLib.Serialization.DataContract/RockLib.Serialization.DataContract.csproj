@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <PackageId>RockLib.Serialization.DataContract</PackageId>
-    <PackageVersion>1.0.0-alpha01</PackageVersion>
+    <PackageVersion>1.0.0</PackageVersion>
     <Authors>Quicken Loans</Authors>
     <Description>A DataContract implmentations for RockLib.Serialization.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
