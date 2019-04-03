@@ -6,7 +6,7 @@
 
   <PropertyGroup>
     <PackageId>RockLib.Serialization</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.0.1</PackageVersion>
     <Authors>Quicken Loans</Authors>
     <Description>A simple serialization abstraction with To and From extensions.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
