@@ -24,7 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RockLib.Serialization" Version="1.0.0" />
+    <PackageReference Include="RockLib.Serialization" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
