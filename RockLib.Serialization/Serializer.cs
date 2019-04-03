@@ -29,7 +29,7 @@ namespace RockLib.Serialization
 
         private static Dictionary<string, ISerializer> LoadJsonSerializers()
         {
-            var serializers = Config.Root.GetSection("RockLib.Serialization:JsonSerializers")
+            var serializers = Config.Root.GetCompositeSection("RockLib_Serialization:JsonSerializers", "RockLib.Serialization:JsonSerializers")
                 .Create<List<ISerializer>>(new DefaultTypes().Add(typeof(ISerializer), typeof(DefaultJsonSerializer)));
 
             return serializers == null || serializers.Count == 0
@@ -39,7 +39,7 @@ namespace RockLib.Serialization
 
         private static Dictionary<string, ISerializer> LoadXmlSerializers()
         {
-            var serializers = Config.Root.GetSection("RockLib.Serialization:XmlSerializers")
+            var serializers = Config.Root.GetCompositeSection("RockLib_Serialization:XmlSerializers", "RockLib.Serialization:XmlSerializers")
                 .Create<IReadOnlyList<ISerializer>>(new DefaultTypes().Add(typeof(ISerializer), typeof(DefaultXmlSerializer)));
 
             return serializers == null || serializers.Count == 0
