@@ -10,9 +10,7 @@ namespace RockLib.Serialization.Tests
     public class DefaultXmlSerializerTests
     {
         private readonly TypeForXmlSerializer _expectedItem = new TypeForXmlSerializer { PropA = 5, PropB = true, PropC = "PropC" };
-        private readonly string _streamHeader = @"<?xml version=""1.0"" encoding=""utf-8""?>";
-        private readonly string _stringHeader = @"<?xml version=""1.0"" encoding=""utf-16""?>";
-        private readonly string _expectedXmlFormat = @"{0}<TypeForXmlSerializer xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema""><PropA>5</PropA><PropB>true</PropB><PropC>PropC</PropC></TypeForXmlSerializer>";
+        private const string _expectedXml = @"<?xml version=""1.0"" encoding=""utf-8""?><TypeForXmlSerializer xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema""><PropA>5</PropA><PropB>true</PropB><PropC>PropC</PropC></TypeForXmlSerializer>";
 
         [Fact]
         public void EmptyConstructorCreatesDefaultValues()
@@ -135,7 +133,7 @@ namespace RockLib.Serialization.Tests
                 {
                     stream.Seek(0, SeekOrigin.Begin);
                     var xml = streamReader.ReadToEnd();
-                    xml.Should().Be(string.Format(_expectedXmlFormat, _streamHeader));
+                    xml.Should().Be(_expectedXml);
                 }
             }
         }
@@ -150,7 +148,7 @@ namespace RockLib.Serialization.Tests
             {
                 using (var writer = new StreamWriter(stream, new UTF8Encoding(false, true), 1024, true))
                 {
-                    writer.Write(_expectedXmlFormat, _streamHeader);
+                    writer.Write(_expectedXml);
                 }
                 stream.Seek(0, SeekOrigin.Begin);
 
@@ -168,7 +166,7 @@ namespace RockLib.Serialization.Tests
 
             var xml = serializer.SerializeToString(_expectedItem, typeof(TypeForXmlSerializer));
 
-            xml.Should().Be(string.Format(_expectedXmlFormat, _stringHeader));
+            xml.Should().Be(_expectedXml);
         }
 
         [Fact]
@@ -176,7 +174,7 @@ namespace RockLib.Serialization.Tests
         {
             var serializer = new DefaultXmlSerializer();
 
-            var item = serializer.DeserializeFromString(string.Format(_expectedXmlFormat, _stringHeader), typeof(TypeForXmlSerializer)) as TypeForXmlSerializer;
+            var item = serializer.DeserializeFromString(_expectedXml, typeof(TypeForXmlSerializer)) as TypeForXmlSerializer;
 
             item.Should().NotBeNull();
             item.Should().BeEquivalentTo(_expectedItem);

@@ -93,10 +93,11 @@ namespace RockLib.Serialization
 
             var builder = new StringBuilder();
             if (WriterSettings == null)
-                using (var writer = new StringWriter(builder))
+                using (var writer = new EncodedStringWriter(builder))
                     new XmlSerializer(type).Serialize(writer, item, Namespaces);
             else
-                using (var writer = XmlWriter.Create(builder, WriterSettings))
+                using (var stringWriter = new EncodedStringWriter(builder, WriterSettings.Encoding))
+                using (var writer = XmlWriter.Create(stringWriter, WriterSettings))
                     new XmlSerializer(type).Serialize(writer, item, Namespaces);
 
             return builder.ToString();
@@ -131,6 +132,13 @@ namespace RockLib.Serialization
         private static Type CheckType(Type type, object item)
         {
             return !type.GetTypeInfo().IsAbstract ? type : item.GetType();
+        }
+
+        private class EncodedStringWriter : StringWriter
+        {
+            private static readonly Encoding UTF8 = new UTF8Encoding(false, true);
+            public EncodedStringWriter(StringBuilder sb, Encoding encoding = null) : base(sb) { Encoding = encoding ?? UTF8; }
+            public override Encoding Encoding { get; }
         }
     }
 }
