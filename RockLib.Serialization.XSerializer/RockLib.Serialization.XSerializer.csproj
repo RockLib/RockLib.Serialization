@@ -7,7 +7,7 @@
   <PropertyGroup>
     <PackageId>RockLib.Serialization.XSerializer</PackageId>
     <PackageVersion>1.0.1</PackageVersion>
-    <Authors>Quicken Loans</Authors>
+    <Authors>Justin Moss</Authors>
     <Description>An XSerializer implmentation of the RockLib.Serialization.ISerializer.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
