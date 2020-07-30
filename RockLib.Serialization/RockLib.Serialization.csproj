@@ -7,13 +7,13 @@
   <PropertyGroup>
     <PackageId>RockLib.Serialization</PackageId>
     <PackageVersion>1.0.2</PackageVersion>
-    <Authors>Justin Moss</Authors>
+    <Authors>RockLib</Authors>
     <Description>A simple serialization abstraction with To and From extensions.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/RockLib/RockLib.Serialization/tree/master/RockLib.Serialization</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/RockLib/RockLib.Serialization/blob/master/LICENSE</PackageLicenseUrl>
-    <Copyright>Copyright 2017-2018 (c) Quicken Loans Corporation. All rights reserved.</Copyright>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Copyright>Copyright 2017-2020 (c) Quicken Loans Corporation. All rights reserved.</Copyright>
     <PackageTags>RockLib Serialization</PackageTags>
     <Version>1.0.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -24,8 +24,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="RockLib.Configuration" Version="2.4.1" />
-    <PackageReference Include="RockLib.Configuration.ObjectFactory" Version="1.6.1" />
+    <None Include="..\LICENSE.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RockLib.Configuration" Version="2.4.3" />
+    <PackageReference Include="RockLib.Configuration.ObjectFactory" Version="1.6.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">

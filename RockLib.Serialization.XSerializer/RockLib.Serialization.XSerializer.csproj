@@ -7,13 +7,13 @@
   <PropertyGroup>
     <PackageId>RockLib.Serialization.XSerializer</PackageId>
     <PackageVersion>1.0.1</PackageVersion>
-    <Authors>Justin Moss</Authors>
+    <Authors>RockLib</Authors>
     <Description>An XSerializer implmentation of the RockLib.Serialization.ISerializer.</Description>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageReleaseNotes></PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/RockLib/RockLib.Serialization/tree/master/RockLib.Serialization</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/RockLib/RockLib.Serialization/blob/master/LICENSE</PackageLicenseUrl>
-    <Copyright>Copyright 2017-2018 (c) Quicken Loans Corporation. All rights reserved.</Copyright>
+    <PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+    <Copyright>Copyright 2017-2020 (c) Quicken Loans Corporation. All rights reserved.</Copyright>
     <PackageTags>RockLib Serialization XSerializer</PackageTags>
     <Version>1.0.0</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -22,6 +22,10 @@
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\RockLib.Serialization.XSerializer.xml</DocumentationFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE.md" Pack="true" PackagePath="" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="RockLib.Serialization" Version="1.0.1" />
