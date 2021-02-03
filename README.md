@@ -19,4 +19,4 @@ Contains the `DataContractJsonSerializer` and `DataContractXmlSerializer` implem
 - [Getting started](docs/GettingStarted.md)
 - How to:
   - [Configure serializers](docs/ConfigureSerializers.md)
-  - [Configure and use named serializers](docs/NamedSerialiers.md)
+  - [Configure and use named serializers](docs/NamedSerializers.md)
