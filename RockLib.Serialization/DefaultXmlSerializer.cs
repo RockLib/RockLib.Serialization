@@ -16,7 +16,7 @@ namespace RockLib.Serialization
         /// Initializes a new instance of the <see cref="DefaultJsonSerializer"/> class.
         /// </summary>
         /// <param name="name">The name of the serializer, used to when selecting which serializer to use.</param>
-        /// <param name="namespaces">The object that defines the prefixes for serialization.</param>
+        /// <param name="namespaces">The objects that define the namespace prefixes for serialization.</param>
         /// <param name="writerSettings">The object that defines the settings for the <see cref="XmlWriter"/>.</param>
         /// <param name="readerSettings">The object that defines the settings for the <see cref="XmlReader"/>.</param>
         public DefaultXmlSerializer(string name = "default", XmlQualifiedName[] namespaces = null, XmlWriterSettings writerSettings = null, XmlReaderSettings readerSettings = null)
@@ -33,7 +33,7 @@ namespace RockLib.Serialization
         public string Name { get; }
 
         /// <summary>
-        /// Gets the object that defines the prefixes for serialization.
+        /// Gets the objects that define the namespace prefixes for serialization.
         /// </summary>
         public XmlSerializerNamespaces Namespaces { get; }
 
