@@ -49,7 +49,7 @@ namespace RockLib.Serialization.XSerializer.Tests
         {
             Action action = () => new XSerializerXmlSerializer().SerializeToStream(null, new object(), typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: stream");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
         }
 
         [Fact]
@@ -57,7 +57,7 @@ namespace RockLib.Serialization.XSerializer.Tests
         {
             Action action = () => new XSerializerXmlSerializer().SerializeToStream(new MemoryStream(), null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: item");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
         }
 
         [Fact]
@@ -65,7 +65,7 @@ namespace RockLib.Serialization.XSerializer.Tests
         {
             Action action = () => new XSerializerXmlSerializer().SerializeToStream(new MemoryStream(), new object(), null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]
@@ -73,7 +73,7 @@ namespace RockLib.Serialization.XSerializer.Tests
         {
             Action action = () => new XSerializerXmlSerializer().DeserializeFromStream(null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: stream");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace RockLib.Serialization.XSerializer.Tests
         {
             Action action = () => new XSerializerXmlSerializer().DeserializeFromStream(new MemoryStream(), null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]
@@ -89,7 +89,7 @@ namespace RockLib.Serialization.XSerializer.Tests
         {
             Action action = () => new XSerializerXmlSerializer().SerializeToString(null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: item");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
         }
 
         [Fact]
@@ -97,7 +97,7 @@ namespace RockLib.Serialization.XSerializer.Tests
         {
             Action action = () => new XSerializerXmlSerializer().SerializeToString(new object(), null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]
@@ -105,7 +105,7 @@ namespace RockLib.Serialization.XSerializer.Tests
         {
             Action action = () => new XSerializerXmlSerializer().DeserializeFromString(null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: data");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*data*");
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace RockLib.Serialization.XSerializer.Tests
         {
             Action action = () => new XSerializerXmlSerializer().DeserializeFromString("", null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]

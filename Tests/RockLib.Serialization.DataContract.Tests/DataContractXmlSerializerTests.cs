@@ -50,7 +50,7 @@ namespace RockLib.Serialization.DataContract.Tests
         {
             Action action = () => new DataContractXmlSerializer().SerializeToStream(null, new object(), typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: stream");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
         }
 
         [Fact]
@@ -58,7 +58,7 @@ namespace RockLib.Serialization.DataContract.Tests
         {
             Action action = () => new DataContractXmlSerializer().SerializeToStream(new MemoryStream(), null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: item");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace RockLib.Serialization.DataContract.Tests
         {
             Action action = () => new DataContractXmlSerializer().SerializeToStream(new MemoryStream(), new object(), null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]
@@ -74,7 +74,7 @@ namespace RockLib.Serialization.DataContract.Tests
         {
             Action action = () => new DataContractXmlSerializer().DeserializeFromStream(null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: stream");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
         }
 
         [Fact]
@@ -82,7 +82,7 @@ namespace RockLib.Serialization.DataContract.Tests
         {
             Action action = () => new DataContractXmlSerializer().DeserializeFromStream(new MemoryStream(), null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]
@@ -90,7 +90,7 @@ namespace RockLib.Serialization.DataContract.Tests
         {
             Action action = () => new DataContractXmlSerializer().SerializeToString(null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: item");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
         }
 
         [Fact]
@@ -98,7 +98,7 @@ namespace RockLib.Serialization.DataContract.Tests
         {
             Action action = () => new DataContractXmlSerializer().SerializeToString(new object(), null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace RockLib.Serialization.DataContract.Tests
         {
             Action action = () => new DataContractXmlSerializer().DeserializeFromString(null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: data");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*data*");
         }
 
         [Fact]
@@ -114,7 +114,7 @@ namespace RockLib.Serialization.DataContract.Tests
         {
             Action action = () => new DataContractXmlSerializer().DeserializeFromString("", null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]
