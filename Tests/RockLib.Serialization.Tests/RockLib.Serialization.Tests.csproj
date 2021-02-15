@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RockLib.Serialization.DataContract\RockLib.Serialization.DataContract.csproj" />
+    <ProjectReference Include="..\..\RockLib.Serialization\RockLib.Serialization.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract", "RockLib.Serialization.DataContract\RockLib.Serialization.DataContract.csproj", "{A3F8D9DE-2A87-4505-B956-34B3102A4906}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract.Tests", "RockLib.Serialization.DataContract.Tests\RockLib.Serialization.DataContract.Tests.csproj", "{B5307852-10FB-4B48-AE84-DA79E4CA11A5}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DataContract.DotNetCore", "Example.Serialization.DataContract.DotNetCore\Example.Serialization.DataContract.DotNetCore.csproj", "{76DC1ABC-EA77-401C-9F11-8D576717AF00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract.Tests", "Tests\RockLib.Serialization.DataContract.Tests\RockLib.Serialization.DataContract.Tests.csproj", "{1295C078-19D0-4932-A769-67D11EADB459}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +17,10 @@ Global
 		{A3F8D9DE-2A87-4505-B956-34B3102A4906}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3F8D9DE-2A87-4505-B956-34B3102A4906}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3F8D9DE-2A87-4505-B956-34B3102A4906}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5307852-10FB-4B48-AE84-DA79E4CA11A5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{76DC1ABC-EA77-401C-9F11-8D576717AF00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{76DC1ABC-EA77-401C-9F11-8D576717AF00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{76DC1ABC-EA77-401C-9F11-8D576717AF00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{76DC1ABC-EA77-401C-9F11-8D576717AF00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1295C078-19D0-4932-A769-67D11EADB459}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1295C078-19D0-4932-A769-67D11EADB459}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1295C078-19D0-4932-A769-67D11EADB459}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1295C078-19D0-4932-A769-67D11EADB459}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
