@@ -4,7 +4,7 @@ configuration: Release
 only_commits:
   files:
   - RockLib.Serialization.DataContract/
-  - RockLib.Serialization.DataContract.Tests/
+  - Tests/RockLib.Serialization.DataContract.Tests/
   - RockLib.Serialization.DataContract.sln
   - RockLib.Serialization.DataContract.appveyor.yml
 before_build:
