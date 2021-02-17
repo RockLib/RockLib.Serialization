@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="RockLib.Serialization" Version="1.0.4" />
+    <PackageReference Include="RockLib.Serialization" Version="1.0.5" />
   </ItemGroup>
 
 </Project>
