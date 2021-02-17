@@ -51,7 +51,7 @@ namespace RockLib.Serialization.Tests
         {
             Action action = () => new DefaultJsonSerializer().SerializeToStream(null, new object(), typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: stream");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
         }
 
         [Fact]
@@ -59,7 +59,7 @@ namespace RockLib.Serialization.Tests
         {
             Action action = () => new DefaultJsonSerializer().SerializeToStream(new MemoryStream(), null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: item");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
         }
 
         [Fact]
@@ -67,7 +67,7 @@ namespace RockLib.Serialization.Tests
         {
             Action action = () => new DefaultJsonSerializer().SerializeToStream(new MemoryStream(), new object(), null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]
@@ -75,7 +75,7 @@ namespace RockLib.Serialization.Tests
         {
             Action action = () => new DefaultJsonSerializer().DeserializeFromStream(null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: stream");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
         }
 
         [Fact]
@@ -83,7 +83,7 @@ namespace RockLib.Serialization.Tests
         {
             Action action = () => new DefaultJsonSerializer().DeserializeFromStream(new MemoryStream(), null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace RockLib.Serialization.Tests
         {
             Action action = () => new DefaultJsonSerializer().SerializeToString(null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: item");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
         }
 
         [Fact]
@@ -99,7 +99,7 @@ namespace RockLib.Serialization.Tests
         {
             Action action = () => new DefaultJsonSerializer().SerializeToString(new object(), null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]
@@ -107,7 +107,7 @@ namespace RockLib.Serialization.Tests
         {
             Action action = () => new DefaultJsonSerializer().DeserializeFromString(null, typeof(object));
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: data");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*data*");
         }
 
         [Fact]
@@ -115,7 +115,7 @@ namespace RockLib.Serialization.Tests
         {
             Action action = () => new DefaultJsonSerializer().DeserializeFromString("", null);
 
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.\r\nParameter name: type");
+            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
 
         [Fact]

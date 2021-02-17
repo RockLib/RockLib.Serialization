@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RockLib.Serialization\RockLib.Serialization.csproj" />
+    <PackageReference Include="RockLib.Serialization.XSerializer" Version="1.0.3" />
   </ItemGroup>
 
 </Project>

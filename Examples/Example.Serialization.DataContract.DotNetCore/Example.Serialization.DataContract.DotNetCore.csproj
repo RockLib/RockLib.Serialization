@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="RockLib.Serialization.DataContract" Version="1.0.0-alpha01" />
+    <PackageReference Include="RockLib.Serialization.DataContract" Version="1.0.3" />
   </ItemGroup>
 
 </Project>

@@ -11,12 +11,12 @@
 
   <ItemGroup>
     <Content Include="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="RockLib.Serialization.XSerializer" Version="1.0.0-alpha01" />
+    <PackageReference Include="RockLib.Serialization" Version="1.0.4" />
   </ItemGroup>
 
 </Project>

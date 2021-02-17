@@ -4,7 +4,7 @@ configuration: Release
 only_commits:
   files:
   - RockLib.Serialization/
-  - RockLib.Serialization.Tests/
+  - Tests/RockLib.Serialization.Tests/
   - RockLib.Serialization.sln
   - RockLib.Serialization.appveyor.yml
 before_build:
