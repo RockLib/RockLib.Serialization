@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.XSerializer", "RockLib.Serialization.XSerializer\RockLib.Serialization.XSerializer.csproj", "{38BA53E9-5C50-4AAC-B9F3-514AC4819651}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.XSerializer", "RockLib.Serialization.XSerializer.csproj", "{38BA53E9-5C50-4AAC-B9F3-514AC4819651}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.XSerializer.Tests", "Tests\RockLib.Serialization.XSerializer.Tests\RockLib.Serialization.XSerializer.Tests.csproj", "{7445F3F7-4C3A-47C9-87BA-7528C30BDE60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.XSerializer.Tests", "..\Tests\RockLib.Serialization.XSerializer.Tests\RockLib.Serialization.XSerializer.Tests.csproj", "{7445F3F7-4C3A-47C9-87BA-7528C30BDE60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract", "RockLib.Serialization.DataContract\RockLib.Serialization.DataContract.csproj", "{A3F8D9DE-2A87-4505-B956-34B3102A4906}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract", "RockLib.Serialization.DataContract.csproj", "{A3F8D9DE-2A87-4505-B956-34B3102A4906}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract.Tests", "Tests\RockLib.Serialization.DataContract.Tests\RockLib.Serialization.DataContract.Tests.csproj", "{1295C078-19D0-4932-A769-67D11EADB459}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract.Tests", "..\Tests\RockLib.Serialization.DataContract.Tests\RockLib.Serialization.DataContract.Tests.csproj", "{1295C078-19D0-4932-A769-67D11EADB459}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
