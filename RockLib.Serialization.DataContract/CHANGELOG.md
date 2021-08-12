@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Adds SourceLink to nuget package.
 - Changes "Quicken Loans" to "Rocket Mortgage".
+- Updates RockLib.Serialization to latest version, [1.0.7](https://github.com/RockLib/RockLib.Serialization/blob/main/RockLib.Serialization/CHANGELOG.md#107---2021-08-12).
 
 ----
 
