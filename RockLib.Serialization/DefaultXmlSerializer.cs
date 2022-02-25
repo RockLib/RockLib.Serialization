@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -19,14 +20,17 @@ namespace RockLib.Serialization
         /// <param name="namespaces">The objects that define the namespace prefixes for serialization.</param>
         /// <param name="writerSettings">The object that defines the settings for the <see cref="XmlWriter"/>.</param>
         /// <param name="readerSettings">The object that defines the settings for the <see cref="XmlReader"/>.</param>
-        public DefaultXmlSerializer(string name = "default", XmlQualifiedName[] namespaces = null, XmlWriterSettings writerSettings = null, XmlReaderSettings readerSettings = null)
+        public DefaultXmlSerializer(string name = "default", XmlQualifiedName[]? namespaces = null,
+            XmlWriterSettings? writerSettings = null, XmlReaderSettings? readerSettings = null)
         {
             Name = name ?? "default";
             WriterSettings = writerSettings;
             ReaderSettings = readerSettings;
 
-            if (namespaces != null)
+            if (namespaces is not null)
+            {
                 Namespaces = new XmlSerializerNamespaces(namespaces);
+            }
         }
 
         /// <inheritdoc />
@@ -35,89 +39,121 @@ namespace RockLib.Serialization
         /// <summary>
         /// Gets the objects that define the namespace prefixes for serialization.
         /// </summary>
-        public XmlSerializerNamespaces Namespaces { get; }
+        public XmlSerializerNamespaces? Namespaces { get; }
 
         /// <summary>
         /// Gets the object that defines the settings for the <see cref="XmlWriter"/>.
         /// </summary>
-        public XmlWriterSettings WriterSettings { get; }
+        public XmlWriterSettings? WriterSettings { get; }
 
         /// <summary>
         /// Gets the object that defines the settings for the <see cref="XmlReader"/>.
         /// </summary>
-        public XmlReaderSettings ReaderSettings { get; }
+        public XmlReaderSettings? ReaderSettings { get; }
 
         /// <inheritdoc />
         public void SerializeToStream(Stream stream, object item, Type type)
         {
-            if (stream == null)
+            if (stream is null)
+            {
                 throw new ArgumentNullException(nameof(stream));
-            if (item == null)
+            }
+            if (item is null)
+            {
                 throw new ArgumentNullException(nameof(item));
-            if (type == null)
+            }
+            if (type is null)
+            {
                 throw new ArgumentNullException(nameof(type));
+            }
 
             type = CheckType(type, item);
 
-            if (WriterSettings == null)
+            if (WriterSettings is null)
+            {
                 new XmlSerializer(type).Serialize(stream, item, Namespaces);
+            }
             else
-                using (var xmlWriter = XmlWriter.Create(stream, WriterSettings))
-                    new XmlSerializer(type).Serialize(xmlWriter, item, Namespaces);
+            {
+                using var xmlWriter = XmlWriter.Create(stream, WriterSettings);
+                new XmlSerializer(type).Serialize(xmlWriter, item, Namespaces);
+            }
         }
 
         /// <inheritdoc />
-        public object DeserializeFromStream(Stream stream, Type type)
+        public object? DeserializeFromStream(Stream stream, Type type)
         {
-            if (stream == null)
+            if (stream is null)
+            {
                 throw new ArgumentNullException(nameof(stream));
-            if (type == null)
+            }
+            if (type is null)
+            {
                 throw new ArgumentNullException(nameof(type));
+            }
 
-            if (ReaderSettings == null)
-                return new XmlSerializer(type).Deserialize(stream);
+            if (ReaderSettings is null)
+            {
+                using var xmlNullSettingsReader = XmlReader.Create(stream);
+                return new XmlSerializer(type).Deserialize(xmlNullSettingsReader);
+            }
 
-            using (var xmlReader = XmlReader.Create(stream, ReaderSettings))
-                return new XmlSerializer(type).Deserialize(xmlReader);
+            using var xmlReader = XmlReader.Create(stream, ReaderSettings);
+            return new XmlSerializer(type).Deserialize(xmlReader);
         }
 
         /// <inheritdoc />
         public string SerializeToString(object item, Type type)
         {
-            if (item == null)
+            if (item is null)
+            {
                 throw new ArgumentNullException(nameof(item));
-            if (type == null)
+            }
+            if (type is null)
+            {
                 throw new ArgumentNullException(nameof(type));
+            }
 
             type = CheckType(type, item);
 
             var builder = new StringBuilder();
-            if (WriterSettings == null)
-                using (var writer = new EncodedStringWriter(builder))
-                    new XmlSerializer(type).Serialize(writer, item, Namespaces);
+            if (WriterSettings is null)
+            {
+                using var writer = new EncodedStringWriter(builder);
+                new XmlSerializer(type).Serialize(writer, item, Namespaces);
+            }
             else
-                using (var stringWriter = new EncodedStringWriter(builder, WriterSettings.Encoding))
-                using (var writer = XmlWriter.Create(stringWriter, WriterSettings))
-                    new XmlSerializer(type).Serialize(writer, item, Namespaces);
+            {
+                using var stringWriter = new EncodedStringWriter(builder, WriterSettings.Encoding);
+                using var writer = XmlWriter.Create(stringWriter, WriterSettings);
+                new XmlSerializer(type).Serialize(writer, item, Namespaces);
+            }
 
             return builder.ToString();
         }
 
         /// <inheritdoc />
-        public object DeserializeFromString(string data, Type type)
+        public object? DeserializeFromString(string data, Type type)
         {
-            if (data == null)
+            if (data is null)
+            {
                 throw new ArgumentNullException(nameof(data));
-            if (type == null)
+            }
+            if (type is null)
+            {
                 throw new ArgumentNullException(nameof(type));
+            }
 
-            if (ReaderSettings == null)
-                using (var reader = new StringReader(data))
-                    return new XmlSerializer(type).Deserialize(reader);
+            if (ReaderSettings is null)
+            {
+                using var stringReader = new StringReader(data);
+                using var xmlNullSettingsReader = XmlReader.Create(stringReader);
+                return new XmlSerializer(type).Deserialize(xmlNullSettingsReader);
+            }
 
-            using (var reader = new StringReader(data))
-            using (var xmlReader = XmlReader.Create(reader, ReaderSettings))
-                return new XmlSerializer(type).Deserialize(xmlReader);
+            using var reader = new StringReader(data);
+            using var xmlReader = XmlReader.Create(reader, ReaderSettings);
+            return new XmlSerializer(type).Deserialize(xmlReader);
         }
 
         /// <summary>
@@ -131,13 +167,14 @@ namespace RockLib.Serialization
         /// </remarks>
         private static Type CheckType(Type type, object item)
         {
-            return !type.GetTypeInfo().IsAbstract ? type : item.GetType();
+            return !type.IsAbstract ? type : item.GetType();
         }
 
         private class EncodedStringWriter : StringWriter
         {
             private static readonly Encoding UTF8 = new UTF8Encoding(false, true);
-            public EncodedStringWriter(StringBuilder sb, Encoding encoding = null) : base(sb) { Encoding = encoding ?? UTF8; }
+            public EncodedStringWriter(StringBuilder builder, Encoding? encoding = null) 
+                : base(builder, CultureInfo.InvariantCulture) { Encoding = encoding ?? UTF8; }
             public override Encoding Encoding { get; }
         }
     }
