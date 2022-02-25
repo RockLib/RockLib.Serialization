@@ -9,11 +9,11 @@
 		<PackageReleaseNotes>A changelog is available at https://github.com/RockLib/RockLib.Serialization/blob/main/RockLib.Serialization/CHANGELOG.md.</PackageReleaseNotes>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageTags>RockLib Serialization</PackageTags>
-		<PackageVersion>1.0.7</PackageVersion>
+		<PackageVersion>2.0.0</PackageVersion>
 		<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
 		<PackageIcon>icon.png</PackageIcon>
 		<PublishRepositoryUrl>True</PublishRepositoryUrl>
-		<Version>1.0.0</Version>
+		<Version>2.0.0</Version>
 	</PropertyGroup>
 	<PropertyGroup>
 		<DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(PackageId).xml</DocumentationFile>
