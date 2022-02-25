@@ -9,7 +9,7 @@ namespace RockLib.Serialization.Tests
 {
     public class DefaultXmlSerializerTests
     {
-        private readonly TypeForXmlSerializer _expectedItem = new TypeForXmlSerializer { PropA = 5, PropB = true, PropC = "PropC" };
+        private readonly TypeForXmlSerializer _expectedItem = new() { PropA = 5, PropB = true, PropC = "PropC" };
         private const string _expectedXml = @"<?xml version=""1.0"" encoding=""utf-8""?><TypeForXmlSerializer xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema""><PropA>5</PropA><PropB>true</PropB><PropC>PropC</PropC></TypeForXmlSerializer>";
 
         [Fact]
@@ -122,19 +122,15 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStreamSerializesCorrectly()
         {
-            var serializer = new DefaultXmlSerializer(writerSettings: new XmlWriterSettings { Encoding = Encoding.UTF8});
+            var serializer = new DefaultXmlSerializer(writerSettings: new XmlWriterSettings { Encoding = Encoding.UTF8 });
 
-            using (var stream = new MemoryStream())
-            {
-                serializer.SerializeToStream(stream, _expectedItem, typeof(TypeForXmlSerializer));
+            using var stream = new MemoryStream();
+            serializer.SerializeToStream(stream, _expectedItem, typeof(TypeForXmlSerializer));
 
-                using (var streamReader = new StreamReader(stream))
-                {
-                    stream.Seek(0, SeekOrigin.Begin);
-                    var xml = streamReader.ReadToEnd();
-                    xml.Should().Be(_expectedXml);
-                }
-            }
+            using var streamReader = new StreamReader(stream);
+            stream.Seek(0, SeekOrigin.Begin);
+            var xml = streamReader.ReadToEnd();
+            xml.Should().Be(_expectedXml);
         }
 
         [Fact]

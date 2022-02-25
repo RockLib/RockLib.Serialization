@@ -123,17 +123,13 @@ namespace RockLib.Serialization.Tests
         {
             var serializer = new DefaultJsonSerializer();
 
-            using (var stream = new MemoryStream())
-            {
-                serializer.SerializeToStream(stream, _expectedItem, typeof(TypeForJsonSerializer));
+            using var stream = new MemoryStream();
+            serializer.SerializeToStream(stream, _expectedItem, typeof(TypeForJsonSerializer));
 
-                using (var streamReader = new StreamReader(stream))
-                {
-                    stream.Seek(0, SeekOrigin.Begin);
-                    var json = streamReader.ReadToEnd();
-                    json.Should().Be(_expectedJson);
-                }
-            }
+            using var streamReader = new StreamReader(stream);
+            stream.Seek(0, SeekOrigin.Begin);
+            var json = streamReader.ReadToEnd();
+            json.Should().Be(_expectedJson);
         }
 
         [Fact]
