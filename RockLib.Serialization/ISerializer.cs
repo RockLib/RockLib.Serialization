@@ -28,7 +28,7 @@ namespace RockLib.Serialization
         /// <param name="stream">The stream to deserialize from.</param>
         /// <param name="type">The type to deserialize as.</param>
         /// <returns>An instance of type <paramref name="type"/>.</returns>
-        object DeserializeFromStream(Stream stream, Type type);
+        object? DeserializeFromStream(Stream stream, Type type);
 
         /// <summary>
         /// Serialize the <paramref name="item"/> as <paramref name="type"/> to a string.
@@ -44,6 +44,6 @@ namespace RockLib.Serialization
         /// <param name="data">The string containing a representation of an object of type <paramref name="type"/>.</param>
         /// <param name="type">The type to deserialize as.</param>
         /// <returns>An instance of type <paramref name="type"/>.</returns>
-        object DeserializeFromString(string data, Type type);
+        object? DeserializeFromString(string data, Type type);
     }
 }

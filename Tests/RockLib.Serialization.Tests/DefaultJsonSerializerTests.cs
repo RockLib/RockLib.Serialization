@@ -31,7 +31,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void ConstructorWithNullNameCreatesDefaultName()
         {
-            var serializer = new DefaultJsonSerializer(null);
+            var serializer = new DefaultJsonSerializer(null!);
 
             serializer.Name.Should().Be("default");
         }
@@ -49,7 +49,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStreamThrowWhenStreamIsNull()
         {
-            Action action = () => new DefaultJsonSerializer().SerializeToStream(null, new object(), typeof(object));
+            Action action = () => new DefaultJsonSerializer().SerializeToStream(null!, new object(), typeof(object));
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
         }
@@ -57,7 +57,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStreamThrowWhenItemIsNull()
         {
-            Action action = () => new DefaultJsonSerializer().SerializeToStream(new MemoryStream(), null, typeof(object));
+            Action action = () => new DefaultJsonSerializer().SerializeToStream(new MemoryStream(), null!, typeof(object));
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
         }
@@ -65,7 +65,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStreamThrowWhenTypeIsNull()
         {
-            Action action = () => new DefaultJsonSerializer().SerializeToStream(new MemoryStream(), new object(), null);
+            Action action = () => new DefaultJsonSerializer().SerializeToStream(new MemoryStream(), new object(), null!);
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
@@ -73,7 +73,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void DeserializeFromStreamThrowWhenStreamIsNull()
         {
-            Action action = () => new DefaultJsonSerializer().DeserializeFromStream(null, typeof(object));
+            Action action = () => new DefaultJsonSerializer().DeserializeFromStream(null!, typeof(object));
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
         }
@@ -81,7 +81,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void DeserializeFromStreamThrowWhenTypeIsNull()
         {
-            Action action = () => new DefaultJsonSerializer().DeserializeFromStream(new MemoryStream(), null);
+            Action action = () => new DefaultJsonSerializer().DeserializeFromStream(new MemoryStream(), null!);
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
@@ -89,7 +89,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStringThrowWhenItemIsNull()
         {
-            Action action = () => new DefaultJsonSerializer().SerializeToString(null, typeof(object));
+            Action action = () => new DefaultJsonSerializer().SerializeToString(null!, typeof(object));
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
         }
@@ -97,7 +97,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void SerializeToStringThrowWhenTypeIsNull()
         {
-            Action action = () => new DefaultJsonSerializer().SerializeToString(new object(), null);
+            Action action = () => new DefaultJsonSerializer().SerializeToString(new object(), null!);
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
@@ -105,7 +105,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void DeserializeFromStringThrowWhenItemIsNull()
         {
-            Action action = () => new DefaultJsonSerializer().DeserializeFromString(null, typeof(object));
+            Action action = () => new DefaultJsonSerializer().DeserializeFromString(null!, typeof(object));
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*data*");
         }
@@ -113,7 +113,7 @@ namespace RockLib.Serialization.Tests
         [Fact]
         public void DeserializeFromStringThrowWhenTypeIsNull()
         {
-            Action action = () => new DefaultJsonSerializer().DeserializeFromString("", null);
+            Action action = () => new DefaultJsonSerializer().DeserializeFromString("", null!);
 
             action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
         }
@@ -123,17 +123,13 @@ namespace RockLib.Serialization.Tests
         {
             var serializer = new DefaultJsonSerializer();
 
-            using (var stream = new MemoryStream())
-            {
-                serializer.SerializeToStream(stream, _expectedItem, typeof(TypeForJsonSerializer));
+            using var stream = new MemoryStream();
+            serializer.SerializeToStream(stream, _expectedItem, typeof(TypeForJsonSerializer));
 
-                using (var streamReader = new StreamReader(stream))
-                {
-                    stream.Seek(0, SeekOrigin.Begin);
-                    var json = streamReader.ReadToEnd();
-                    json.Should().Be(_expectedJson);
-                }
-            }
+            using var streamReader = new StreamReader(stream);
+            stream.Seek(0, SeekOrigin.Begin);
+            var json = streamReader.ReadToEnd();
+            json.Should().Be(_expectedJson);
         }
 
         [Fact]
@@ -150,7 +146,7 @@ namespace RockLib.Serialization.Tests
                 }
                 stream.Seek(0, SeekOrigin.Begin);
 
-                item = serializer.DeserializeFromStream(stream, typeof(TypeForJsonSerializer)) as TypeForJsonSerializer;
+                item = (TypeForJsonSerializer)serializer.DeserializeFromStream(stream, typeof(TypeForJsonSerializer))!;
             }
 
             item.Should().NotBeNull();
@@ -178,11 +174,13 @@ namespace RockLib.Serialization.Tests
             item.Should().BeEquivalentTo(_expectedItem);
         }
 
+#pragma warning disable CA1034 // Nested types should not be visible
         public class TypeForJsonSerializer
+#pragma warning restore CA1034 // Nested types should not be visible
         {
             public int PropA { get; set; }
             public bool PropB { get; set; }
-            public string PropC { get; set; }
+            public string? PropC { get; set; }
         }
     }
 }

@@ -14,14 +14,10 @@ namespace RockLib.Serialization.Tests
 {
     public class SerializerTests
     {
-        private static readonly FieldInfo _jsonSerializersField;
-        private static readonly FieldInfo _xmlSerializersField;
-
-        static SerializerTests()
-        {
-            _jsonSerializersField = typeof(Serializer).GetField("_jsonSerializers", BindingFlags.NonPublic | BindingFlags.Static);
-            _xmlSerializersField = typeof(Serializer).GetField("_xmlSerializers", BindingFlags.NonPublic | BindingFlags.Static);
-        }
+        private static readonly FieldInfo _jsonSerializersField =
+            typeof(Serializer).GetField("_jsonSerializers", BindingFlags.NonPublic | BindingFlags.Static)!;
+        private static readonly FieldInfo _xmlSerializersField =
+            typeof(Serializer).GetField("_xmlSerializers", BindingFlags.NonPublic | BindingFlags.Static)!;
 
         [Fact]
         public void DefaultJsonSerializersIsUsedWhenThereIsNoConfig()
@@ -32,7 +28,7 @@ namespace RockLib.Serialization.Tests
             Config.SetRoot(new ConfigurationBuilder().Build());
             Serializer.SetJsonSerializers();
 
-            var jsonSerializer = Serializer.JsonSerializers?.First() as DefaultJsonSerializer;
+            var jsonSerializer = (DefaultJsonSerializer)Serializer.JsonSerializers?.First()!;
 
             jsonSerializer.Should().NotBeNull();
             jsonSerializer.Name.Should().Be("default");
@@ -48,7 +44,7 @@ namespace RockLib.Serialization.Tests
             Config.SetRoot(new ConfigurationBuilder().Build());
             Serializer.SetXmlSerializers();
 
-            var xmlSerializer = Serializer.XmlSerializers?.First() as DefaultXmlSerializer;
+            var xmlSerializer = (DefaultXmlSerializer)Serializer.XmlSerializers?.First()!;
 
             xmlSerializer.Should().NotBeNull();
             xmlSerializer.Name.Should().Be("default");
@@ -71,7 +67,7 @@ namespace RockLib.Serialization.Tests
             Config.SetRoot(config);
             Serializer.SetJsonSerializers();
 
-            var jsonSerializer = Serializer.JsonSerializers?.First() as DefaultJsonSerializer;
+            var jsonSerializer = (DefaultJsonSerializer)Serializer.JsonSerializers?.First()!;
 
             jsonSerializer.Should().NotBeNull();
             jsonSerializer.Name.Should().Be("default");
@@ -94,11 +90,11 @@ namespace RockLib.Serialization.Tests
             Config.SetRoot(config);
             Serializer.SetXmlSerializers();
 
-            var xmlSerializer = Serializer.XmlSerializers?.First() as DefaultXmlSerializer;
+            var xmlSerializer = (DefaultXmlSerializer)Serializer.XmlSerializers?.First()!;
 
             xmlSerializer.Should().NotBeNull();
             xmlSerializer.Name.Should().Be("default");
-            xmlSerializer.WriterSettings.Indent.Should().BeFalse();
+            xmlSerializer.WriterSettings!.Indent.Should().BeFalse();
         }
 
         [Fact]
@@ -205,16 +201,14 @@ namespace RockLib.Serialization.Tests
             var serializerMocks = GetSerializerMocks();
             Serializer.SetJsonSerializers(serializerMocks.Values.Select(v => v.Object));
 
-            using (var stream = new MemoryStream())
-            {
-                var toSerialize = new Type1ForSerializer();
-                toSerialize.ToJson(stream);
+            using var stream = new MemoryStream();
+            var toSerialize = new Type1ForSerializer();
+            toSerialize.ToJson(stream);
 
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Once);
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-            }
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Once);
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
         }
 
         [Fact]
@@ -225,16 +219,14 @@ namespace RockLib.Serialization.Tests
             var serializerMocks = GetSerializerMocks();
             Serializer.SetJsonSerializers(serializerMocks.Values.Select(v => v.Object));
 
-            using (var stream = new MemoryStream())
-            {
-                var toSerialize = new Type1ForSerializer();
-                toSerialize.ToJson(stream, "notdefault");
+            using var stream = new MemoryStream();
+            var toSerialize = new Type1ForSerializer();
+            toSerialize.ToJson(stream, "notdefault");
 
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Once);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-            }
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Once);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
         }
 
         [Fact]
@@ -245,16 +237,14 @@ namespace RockLib.Serialization.Tests
             var serializerMocks = GetSerializerMocks();
             Serializer.SetJsonSerializers(serializerMocks.Values.Select(v => v.Object));
 
-            using (var stream = new MemoryStream())
-            {
-                var toSerialize = new Type1ForSerializer();
-                toSerialize.ToJson(typeof(Type2ForSerializer), stream);
+            using var stream = new MemoryStream();
+            var toSerialize = new Type1ForSerializer();
+            toSerialize.ToJson(typeof(Type2ForSerializer), stream);
 
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Once);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-            }
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Once);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
         }
 
         [Fact]
@@ -265,16 +255,14 @@ namespace RockLib.Serialization.Tests
             var serializerMocks = GetSerializerMocks();
             Serializer.SetJsonSerializers(serializerMocks.Values.Select(v => v.Object));
 
-            using (var stream = new MemoryStream())
-            {
-                var toSerialize = new Type1ForSerializer();
-                toSerialize.ToJson(typeof(Type2ForSerializer), stream, "notdefault");
+            using var stream = new MemoryStream();
+            var toSerialize = new Type1ForSerializer();
+            toSerialize.ToJson(typeof(Type2ForSerializer), stream, "notdefault");
 
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Once);
-            }
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Once);
         }
 
         [Fact]
@@ -353,16 +341,14 @@ namespace RockLib.Serialization.Tests
             var serializerMocks = GetSerializerMocks();
             Serializer.SetXmlSerializers(serializerMocks.Values.Select(v => v.Object));
 
-            using (var stream = new MemoryStream())
-            {
-                var toSerialize = new Type1ForSerializer();
-                toSerialize.ToXml(stream);
+            using var stream = new MemoryStream();
+            var toSerialize = new Type1ForSerializer();
+            toSerialize.ToXml(stream);
 
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Once);
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-            }
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Once);
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
         }
 
         [Fact]
@@ -373,16 +359,14 @@ namespace RockLib.Serialization.Tests
             var serializerMocks = GetSerializerMocks();
             Serializer.SetXmlSerializers(serializerMocks.Values.Select(v => v.Object));
 
-            using (var stream = new MemoryStream())
-            {
-                var toSerialize = new Type1ForSerializer();
-                toSerialize.ToXml(stream, "notdefault");
+            using var stream = new MemoryStream();
+            var toSerialize = new Type1ForSerializer();
+            toSerialize.ToXml(stream, "notdefault");
 
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Once);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-            }
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Once);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
         }
 
         [Fact]
@@ -393,16 +377,14 @@ namespace RockLib.Serialization.Tests
             var serializerMocks = GetSerializerMocks();
             Serializer.SetXmlSerializers(serializerMocks.Values.Select(v => v.Object));
 
-            using (var stream = new MemoryStream())
-            {
-                var toSerialize = new Type1ForSerializer();
-                toSerialize.ToXml(typeof(Type2ForSerializer), stream);
+            using var stream = new MemoryStream();
+            var toSerialize = new Type1ForSerializer();
+            toSerialize.ToXml(typeof(Type2ForSerializer), stream);
 
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Once);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-            }
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Once);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
         }
 
         [Fact]
@@ -413,16 +395,14 @@ namespace RockLib.Serialization.Tests
             var serializerMocks = GetSerializerMocks();
             Serializer.SetXmlSerializers(serializerMocks.Values.Select(v => v.Object));
 
-            using (var stream = new MemoryStream())
-            {
-                var toSerialize = new Type1ForSerializer();
-                toSerialize.ToXml(typeof(Type2ForSerializer), stream, "notdefault");
+            using var stream = new MemoryStream();
+            var toSerialize = new Type1ForSerializer();
+            toSerialize.ToXml(typeof(Type2ForSerializer), stream, "notdefault");
 
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
-                serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Once);
-            }
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["default"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)), Times.Never);
+            serializerMocks["notdefault"].Verify(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)), Times.Once);
         }
 
         [Fact]
@@ -561,7 +541,7 @@ namespace RockLib.Serialization.Tests
             serializerMocks["notdefault"].Verify(m => m.DeserializeFromString(It.IsAny<string>(), typeof(Type2ForSerializer)), Times.Once);
         }
 
-        private Dictionary<string, Mock<ISerializer>> GetSerializerMocks(Stream stream = null)
+        private static Dictionary<string, Mock<ISerializer>> GetSerializerMocks(Stream? stream = null)
         {
             var serializers = new Dictionary<string, Mock<ISerializer>>();
 
@@ -571,10 +551,10 @@ namespace RockLib.Serialization.Tests
             serializerMock1.Setup(m => m.SerializeToString(It.IsAny<object>(), typeof(Type2ForSerializer))).Returns("");
             serializerMock1.Setup(m => m.DeserializeFromString(It.IsAny<string>(), typeof(Type1ForSerializer))).Returns(new Type1ForSerializer());
             serializerMock1.Setup(m => m.DeserializeFromString(It.IsAny<string>(), typeof(Type2ForSerializer))).Returns(new Type2ForSerializer());
-            serializerMock1.Setup(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)));
-            serializerMock1.Setup(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)));
-            serializerMock1.Setup(m => m.DeserializeFromStream(stream, typeof(Type1ForSerializer))).Returns(new Type1ForSerializer());
-            serializerMock1.Setup(m => m.DeserializeFromStream(stream, typeof(Type2ForSerializer))).Returns(new Type2ForSerializer());
+            serializerMock1.Setup(m => m.SerializeToStream(stream!, It.IsAny<object>(), typeof(Type1ForSerializer)));
+            serializerMock1.Setup(m => m.SerializeToStream(stream!, It.IsAny<object>(), typeof(Type2ForSerializer)));
+            serializerMock1.Setup(m => m.DeserializeFromStream(stream!, typeof(Type1ForSerializer))).Returns(new Type1ForSerializer());
+            serializerMock1.Setup(m => m.DeserializeFromStream(stream!, typeof(Type2ForSerializer))).Returns(new Type2ForSerializer());
 
             var serializerMock2 = new Mock<ISerializer>();
             serializerMock2.Setup(m => m.Name).Returns("notdefault");
@@ -582,10 +562,10 @@ namespace RockLib.Serialization.Tests
             serializerMock2.Setup(m => m.SerializeToString(It.IsAny<object>(), typeof(Type2ForSerializer))).Returns("");
             serializerMock2.Setup(m => m.DeserializeFromString(It.IsAny<string>(), typeof(Type1ForSerializer))).Returns(new Type1ForSerializer());
             serializerMock2.Setup(m => m.DeserializeFromString(It.IsAny<string>(), typeof(Type2ForSerializer))).Returns(new Type2ForSerializer());
-            serializerMock2.Setup(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type1ForSerializer)));
-            serializerMock2.Setup(m => m.SerializeToStream(stream, It.IsAny<object>(), typeof(Type2ForSerializer)));
-            serializerMock2.Setup(m => m.DeserializeFromStream(stream, typeof(Type1ForSerializer))).Returns(new Type1ForSerializer());
-            serializerMock2.Setup(m => m.DeserializeFromStream(stream, typeof(Type2ForSerializer))).Returns(new Type2ForSerializer());
+            serializerMock2.Setup(m => m.SerializeToStream(stream!, It.IsAny<object>(), typeof(Type1ForSerializer)));
+            serializerMock2.Setup(m => m.SerializeToStream(stream!, It.IsAny<object>(), typeof(Type2ForSerializer)));
+            serializerMock2.Setup(m => m.DeserializeFromStream(stream!, typeof(Type1ForSerializer))).Returns(new Type1ForSerializer());
+            serializerMock2.Setup(m => m.DeserializeFromStream(stream!, typeof(Type2ForSerializer))).Returns(new Type2ForSerializer());
 
             serializers.Add(serializerMock1.Object.Name, serializerMock1);
             serializers.Add(serializerMock2.Object.Name, serializerMock2);
@@ -595,18 +575,18 @@ namespace RockLib.Serialization.Tests
 
         private static void ResetSeralizers()
         {
-            var jsonSerializers = (Semimutable<Dictionary<string, ISerializer>>)_jsonSerializersField.GetValue(null);
+            var jsonSerializers = (Semimutable<Dictionary<string, ISerializer>>)_jsonSerializersField.GetValue(null)!;
             jsonSerializers.GetUnlockValueMethod().Invoke(jsonSerializers, null);
 
-            var xmlSerializers = (Semimutable<Dictionary<string, ISerializer>>)_xmlSerializersField.GetValue(null);
+            var xmlSerializers = (Semimutable<Dictionary<string, ISerializer>>)_xmlSerializersField.GetValue(null)!;
             xmlSerializers.GetUnlockValueMethod().Invoke(xmlSerializers, null);
         }
 
-        private void ResetConfig()
+        private static void ResetConfig()
         {
-            var rootField = typeof(Config).GetField("_root", BindingFlags.NonPublic | BindingFlags.Static);
+            var rootField = typeof(Config).GetField("_root", BindingFlags.NonPublic | BindingFlags.Static)!;
 
-            var root = (Semimutable<IConfiguration>)rootField.GetValue(null);
+            var root = (Semimutable<IConfiguration>)rootField.GetValue(null)!;
             root.GetUnlockValueMethod().Invoke(root, null);
             root.ResetValue();
         }
