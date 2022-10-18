@@ -1,12 +1,16 @@
+---
+sidebar_position: 2
+---
+
 # How to configure serializers
 
 By default, JSON serialization is done by an instance of `DefaultJsonSerializer` and XML serialization is done by an instance of `DefaultXmlSerializer`, where each is constructed with no optional parameters provided. [See below](#default-serializers) for details on these serializers.
 
-There are two ways of setting custom JSON and XML serializers: programmatically and through the `Config` static class (from the RockLib.Configuration package).
+The two ways to set custom JSON and XML serializers are programmatically and through the `Config` static class (from the RockLib.Configuration package).
 
 Programmatically:
 
-```c#
+```csharp
 // Assuming the MyJsonSerializer and MyXmlSerializer classes exist...
 ISerializer jsonSerializer = new MyJsonSerializer(firstParam: 123, secondParam: "abc");
 ISerializer xmlSerializer = new MyXmlSerializer(firstParam: 456, secondParam: "xyz");
@@ -33,14 +37,14 @@ Through the `Config` static class via appsettings.json:
         "FirstParam": 456,
         "SecondParam": "xyz"
       }
-    } 
-  } 
+    }
+  }
 }
 ```
 
 ## Default serializers
 
-The main RockLib.Serialization package contains the two default implementations of the `ISerializer` interface: `DefaultJsonSerializer` and `DefaultXmlSerializer`. All of the constructor parameters in both classes are optional.
+The main RockLib.Serialization package contains the two default implementations of the `ISerializer` interface: `DefaultJsonSerializer` and `DefaultXmlSerializer`. All the constructor parameters in both classes are optional.
 
 ```json
 {
@@ -59,12 +63,12 @@ The main RockLib.Serialization package contains the two default implementations 
       "WriterSettings" : {
         "Indent": false
       }
-    } 
-  } 
+    }
+  }
 }
 ```
 
-#### DefaultJsonSerializer
+## DefaultJsonSerializer
 
 | Parameter type | Parameter name | Description |
 |:--|:--|:--|
@@ -82,7 +86,7 @@ The main RockLib.Serialization package contains the two default implementations 
 
 ## XSerializer serializers
 
-The RockLib.Serialization.XSerializer package contains two implementations of the `ISerializer` interface: `XSerializerJsonSerializer` and `XSerializerXmlSerializer`. All of the constructor parameters in both classes are optional.
+The RockLib.Serialization.XSerializer package contains two implementations of the `ISerializer` interface: `XSerializerJsonSerializer` and `XSerializerXmlSerializer`. All  the constructor parameters in both classes are optional.
 
 ```json
 {
@@ -107,7 +111,7 @@ The RockLib.Serialization.XSerializer package contains two implementations of th
 }
 ```
 
-#### XSerializerJsonSerializer
+### XSerializerJsonSerializer
 
 | Parameter type | Parameter name | Description |
 |:--|:--|:--|
@@ -115,7 +119,7 @@ The RockLib.Serialization.XSerializer package contains two implementations of th
 | `JsonSerializerConfiguration` | options | Options for customizing the JsonSerializer. |
 
 
-#### XSerializerXmlSerializer
+### XSerializerXmlSerializer
 
 | Parameter type | Parameter name | Description |
 |:--|:--|:--|
@@ -151,7 +155,7 @@ The RockLib.Serialization.DataContract package contains two implementations of t
 }
 ```
 
-#### DataContractJsonSerializer
+### DataContractJsonSerializer
 
 | Parameter type | Parameter name | Description |
 |:--|:--|:--|
@@ -159,7 +163,7 @@ The RockLib.Serialization.DataContract package contains two implementations of t
 | `DataContractJsonSerializerSettings` | settings | Options for customizing the JsonSerializer. |
 
 
-#### DataContractXmlSerializer
+### DataContractXmlSerializer
 
 | Parameter type | Parameter name | Description |
 |:--|:--|:--|
