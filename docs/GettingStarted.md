@@ -74,7 +74,7 @@ namespace SerializationTutorial
 
 Start the app and enter a first and last name. It should output something like this:
 
-```ps1
+```powershell
 FirstName>Joe
 LastName>Public
 
