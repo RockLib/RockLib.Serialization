@@ -86,7 +86,7 @@ The main RockLib.Serialization package contains the two default implementations 
 
 ## XSerializer serializers
 
-The RockLib.Serialization.XSerializer package contains two implementations of the `ISerializer` interface: `XSerializerJsonSerializer` and `XSerializerXmlSerializer`. All  the constructor parameters in both classes are optional.
+The RockLib.Serialization.XSerializer package contains two implementations of the `ISerializer` interface: `XSerializerJsonSerializer` and `XSerializerXmlSerializer`. All the constructor parameters in both classes are optional.
 
 ```json
 {
