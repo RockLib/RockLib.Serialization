@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Getting Started
 
 In this tutorial, we will be building a console application that writes a serialized `Person` object to console as JSON and XML. It then deserializes the JSON and XML back into `Person` objects and verifies that their values are the same.
@@ -14,7 +18,7 @@ Add a nuget reference for "RockLib.Serialization".
 
 Add a new class named 'Person' to the project:
 
-```c#
+```csharp
 namespace SerializationTutorial
 {
     public class Person
@@ -29,7 +33,7 @@ namespace SerializationTutorial
 
 Edit the `Program.cs` file as follows:
 
-```c#
+```csharp
 using RockLib.Serialization;
 
 namespace SerializationTutorial
@@ -70,7 +74,7 @@ namespace SerializationTutorial
 
 Start the app and enter a first and last name. It should output something like this:
 
-```
+```powershell
 FirstName>Joe
 LastName>Public
 

@@ -1,19 +1,23 @@
+---
+sidebar_position: 3
+---
+
 # How to configure and use named serializers
 
 If an application needs to use different serializers depending on the scenario, then _named serializers_ are used. By default, serializers are named "default", so named serializers should given any name other than "default". To serialize or deserialize with a named serializer, pass a value for the optional `name` parameter in the `ToJson`, `FromJson`, `ToXml`, or `FromXml` extension methods.
 
-### Configuring named serializers
+## Configuring named serializers
 
 Configuring named serializers is as simple as providing a unique name for the serializer. It can be done programmatically...
 
-```c#
+```csharp
 ISerializer defaultJsonSerializer = new DefaultJsonSerializer();
 ISerializer myJsonSerializer = new MyJsonSerializer(name: "CustomSerializer", firstParam: 123, secondParam: "abc");
 
 Serializer.SetJsonSerializers(new[] { defaultJsonSerializer, myJsonSerializer });
 ```
 
-...or with the static `Config` class. The previous programmatic example is equivalent to the following appsetting.json example:
+With the static `Config` class. The previous programmatic example is equivalent to the following appsetting.json example:
 
 ```json
 {
@@ -33,11 +37,11 @@ Serializer.SetJsonSerializers(new[] { defaultJsonSerializer, myJsonSerializer })
 }
 ```
 
-### Using named serializers
+## Using named serializers
 
 To use named serializers the `ToJson`, `FromJson`, `ToXml`, or `FromXml` extension methods, provide a value for the optional `name` parameter.
 
-```c#
+```csharp
 Company company = new Company { Name = "Company, Inc." };
 Person person = new Person { FirstName = "Joe", LastName = "Public" };
 
