@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization", "RockLib.Serialization\RockLib.Serialization.csproj", "{A44892BB-EF1E-4AA8-807A-0A917DC1ED5D}"
 EndProject
@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{B2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FC13384D-B17F-42F1-AFFC-9777269B1EC0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DataContract.DotNetCore", "Examples\Example.Serialization.DataContract.DotNetCore\Example.Serialization.DataContract.DotNetCore.csproj", "{430A4385-EFFF-4315-8246-536E538B50C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DataContract", "Examples\Example.Serialization.DataContract.DotNetCore\Example.Serialization.DataContract.csproj", "{430A4385-EFFF-4315-8246-536E538B50C1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DotNetCore", "Examples\Example.Serialization.DotNetCore\Example.Serialization.DotNetCore.csproj", "{3D442F23-8463-484A-9FE2-B41FAB901159}"
 EndProject
