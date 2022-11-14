@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FC13384D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DataContract", "Examples\Example.Serialization.DataContract.DotNetCore\Example.Serialization.DataContract.csproj", "{430A4385-EFFF-4315-8246-536E538B50C1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DotNetCore", "Examples\Example.Serialization.DotNetCore\Example.Serialization.DotNetCore.csproj", "{3D442F23-8463-484A-9FE2-B41FAB901159}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization", "Examples\Example.Serialization.DotNetCore\Example.Serialization.csproj", "{3D442F23-8463-484A-9FE2-B41FAB901159}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.XSerializer.DotNetCore", "Examples\Example.Serialization.XSerializer.DotNetCore\Example.Serialization.XSerializer.DotNetCore.csproj", "{066DAE74-E6E6-4CE8-B881-B66C3124364E}"
 EndProject
