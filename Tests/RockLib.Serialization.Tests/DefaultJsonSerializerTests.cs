@@ -5,182 +5,175 @@ using FluentAssertions;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace RockLib.Serialization.Tests
+namespace RockLib.Serialization.Tests;
+
+public static class DefaultJsonSerializerTests
 {
-    public class DefaultJsonSerializerTests
+    private const string EXPECTED_JSON = @"{""PropA"":5,""PropB"":true,""PropC"":""PropC""}";
+    private static TypeForJsonSerializer _expectedItem = new() { PropA = 5, PropB = true, PropC = "PropC" };
+
+    [Fact]
+    public static void EmptyConstructorCreatesDefaultValues()
     {
-        private readonly string _expectedJson;
-        private readonly TypeForJsonSerializer _expectedItem;
+        var serializer = new DefaultJsonSerializer();
 
-        public DefaultJsonSerializerTests()
+        serializer.Name.Should().Be("default");
+        serializer.JsonSerializer.Should().NotBeNull();
+        serializer.JsonSerializer.Formatting.Should().Be(Formatting.None);
+    }
+
+    [Fact]
+    public static void ConstructorWithNullNameCreatesDefaultName()
+    {
+        var serializer = new DefaultJsonSerializer(null!);
+
+        serializer.Name.Should().Be("default");
+    }
+
+    [Fact]
+    public static void ConstructorPassesValuesCorrectly()
+    {
+        var serializer = new DefaultJsonSerializer("notdefault", new JsonSerializerSettings() { Formatting = Formatting.Indented });
+
+        serializer.Name.Should().Be("notdefault");
+        serializer.JsonSerializer.Should().NotBeNull();
+        serializer.JsonSerializer.Formatting.Should().Be(Formatting.Indented);
+    }
+
+    [Fact]
+    public static void SerializeToStreamThrowWhenStreamIsNull()
+    {
+        Action action = () => new DefaultJsonSerializer().SerializeToStream(null!, new object(), typeof(object));
+
+        action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
+    }
+
+    [Fact]
+    public static void SerializeToStreamThrowWhenItemIsNull()
+    {
+        Action action = () => new DefaultJsonSerializer().SerializeToStream(new MemoryStream(), null!, typeof(object));
+
+        action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
+    }
+
+    [Fact]
+    public static void SerializeToStreamThrowWhenTypeIsNull()
+    {
+        Action action = () => new DefaultJsonSerializer().SerializeToStream(new MemoryStream(), new object(), null!);
+
+        action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
+    }
+
+    [Fact]
+    public static void DeserializeFromStreamThrowWhenStreamIsNull()
+    {
+        Action action = () => new DefaultJsonSerializer().DeserializeFromStream(null!, typeof(object));
+
+        action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
+    }
+
+    [Fact]
+    public static void DeserializeFromStreamThrowWhenTypeIsNull()
+    {
+        Action action = () => new DefaultJsonSerializer().DeserializeFromStream(new MemoryStream(), null!);
+
+        action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
+    }
+
+    [Fact]
+    public static void SerializeToStringThrowWhenItemIsNull()
+    {
+        Action action = () => new DefaultJsonSerializer().SerializeToString(null!, typeof(object));
+
+        action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
+    }
+
+    [Fact]
+    public static void SerializeToStringThrowWhenTypeIsNull()
+    {
+        Action action = () => new DefaultJsonSerializer().SerializeToString(new object(), null!);
+
+        action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
+    }
+
+    [Fact]
+    public static void DeserializeFromStringThrowWhenItemIsNull()
+    {
+        Action action = () => new DefaultJsonSerializer().DeserializeFromString(null!, typeof(object));
+
+        action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*data*");
+    }
+
+    [Fact]
+    public static void DeserializeFromStringThrowWhenTypeIsNull()
+    {
+        Action action = () => new DefaultJsonSerializer().DeserializeFromString("", null!);
+
+        action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
+    }
+
+    [Fact]
+    public static void SerializeToStreamSerializesCorrectly()
+    {
+        var serializer = new DefaultJsonSerializer();
+
+        using var stream = new MemoryStream();
+        serializer.SerializeToStream(stream, _expectedItem, typeof(TypeForJsonSerializer));
+
+        using var streamReader = new StreamReader(stream);
+        stream.Seek(0, SeekOrigin.Begin);
+        var json = streamReader.ReadToEnd();
+        json.Should().Be(EXPECTED_JSON);
+    }
+
+    [Fact]
+    public static void DeserializeFromStreamDeserializesCorrectly()
+    {
+        var serializer = new DefaultJsonSerializer();
+
+        TypeForJsonSerializer item;
+        using (var stream = new MemoryStream())
         {
-            _expectedItem = new TypeForJsonSerializer { PropA = 5, PropB = true, PropC = "PropC" };
-            _expectedJson = @"{""PropA"":5,""PropB"":true,""PropC"":""PropC""}";
-        }
-
-        [Fact]
-        public void EmptyConstructorCreatesDefaultValues()
-        {
-            var serializer = new DefaultJsonSerializer();
-
-            serializer.Name.Should().Be("default");
-            serializer.JsonSerializer.Should().NotBeNull();
-            serializer.JsonSerializer.Formatting.Should().Be(Formatting.None);
-        }
-
-        [Fact]
-        public void ConstructorWithNullNameCreatesDefaultName()
-        {
-            var serializer = new DefaultJsonSerializer(null!);
-
-            serializer.Name.Should().Be("default");
-        }
-
-        [Fact]
-        public void ConstructorPassesValuesCorrectly()
-        {
-            var serializer = new DefaultJsonSerializer("notdefault", new JsonSerializerSettings() { Formatting = Formatting.Indented });
-
-            serializer.Name.Should().Be("notdefault");
-            serializer.JsonSerializer.Should().NotBeNull();
-            serializer.JsonSerializer.Formatting.Should().Be(Formatting.Indented);
-        }
-
-        [Fact]
-        public void SerializeToStreamThrowWhenStreamIsNull()
-        {
-            Action action = () => new DefaultJsonSerializer().SerializeToStream(null!, new object(), typeof(object));
-
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
-        }
-
-        [Fact]
-        public void SerializeToStreamThrowWhenItemIsNull()
-        {
-            Action action = () => new DefaultJsonSerializer().SerializeToStream(new MemoryStream(), null!, typeof(object));
-
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
-        }
-
-        [Fact]
-        public void SerializeToStreamThrowWhenTypeIsNull()
-        {
-            Action action = () => new DefaultJsonSerializer().SerializeToStream(new MemoryStream(), new object(), null!);
-
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
-        }
-
-        [Fact]
-        public void DeserializeFromStreamThrowWhenStreamIsNull()
-        {
-            Action action = () => new DefaultJsonSerializer().DeserializeFromStream(null!, typeof(object));
-
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*stream*");
-        }
-
-        [Fact]
-        public void DeserializeFromStreamThrowWhenTypeIsNull()
-        {
-            Action action = () => new DefaultJsonSerializer().DeserializeFromStream(new MemoryStream(), null!);
-
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
-        }
-
-        [Fact]
-        public void SerializeToStringThrowWhenItemIsNull()
-        {
-            Action action = () => new DefaultJsonSerializer().SerializeToString(null!, typeof(object));
-
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*item*");
-        }
-
-        [Fact]
-        public void SerializeToStringThrowWhenTypeIsNull()
-        {
-            Action action = () => new DefaultJsonSerializer().SerializeToString(new object(), null!);
-
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
-        }
-
-        [Fact]
-        public void DeserializeFromStringThrowWhenItemIsNull()
-        {
-            Action action = () => new DefaultJsonSerializer().DeserializeFromString(null!, typeof(object));
-
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*data*");
-        }
-
-        [Fact]
-        public void DeserializeFromStringThrowWhenTypeIsNull()
-        {
-            Action action = () => new DefaultJsonSerializer().DeserializeFromString("", null!);
-
-            action.Should().Throw<ArgumentNullException>().WithMessage("Value cannot be null.*Parameter*type*");
-        }
-
-        [Fact]
-        public void SerializeToStreamSerializesCorrectly()
-        {
-            var serializer = new DefaultJsonSerializer();
-
-            using var stream = new MemoryStream();
-            serializer.SerializeToStream(stream, _expectedItem, typeof(TypeForJsonSerializer));
-
-            using var streamReader = new StreamReader(stream);
-            stream.Seek(0, SeekOrigin.Begin);
-            var json = streamReader.ReadToEnd();
-            json.Should().Be(_expectedJson);
-        }
-
-        [Fact]
-        public void DeserializeFromStreamDeserializesCorrectly()
-        {
-            var serializer = new DefaultJsonSerializer();
-
-            TypeForJsonSerializer item;
-            using (var stream = new MemoryStream())
+            using (var writer = new StreamWriter(stream, new UTF8Encoding(false, true), 1024, true))
             {
-                using (var writer = new StreamWriter(stream, new UTF8Encoding(false, true), 1024, true))
-                {
-                    writer.Write(_expectedJson);
-                }
-                stream.Seek(0, SeekOrigin.Begin);
-
-                item = (TypeForJsonSerializer)serializer.DeserializeFromStream(stream, typeof(TypeForJsonSerializer))!;
+                writer.Write(EXPECTED_JSON);
             }
+            stream.Seek(0, SeekOrigin.Begin);
 
-            item.Should().NotBeNull();
-            item.Should().BeEquivalentTo(_expectedItem);
+            item = (TypeForJsonSerializer)serializer.DeserializeFromStream(stream, typeof(TypeForJsonSerializer))!;
         }
 
-        [Fact]
-        public void SerializeToStringSerializesCorrectly()
-        {
-            var serializer = new DefaultJsonSerializer();
+        item.Should().NotBeNull();
+        item.Should().BeEquivalentTo(_expectedItem);
+    }
 
-            var json = serializer.SerializeToString(_expectedItem, typeof(TypeForJsonSerializer));
+    [Fact]
+    public static void SerializeToStringSerializesCorrectly()
+    {
+        var serializer = new DefaultJsonSerializer();
 
-            json.Should().Be(_expectedJson);
-        }
+        var json = serializer.SerializeToString(_expectedItem, typeof(TypeForJsonSerializer));
 
-        [Fact]
-        public void DeserializeFromStringDeserializesCorrectly()
-        {
-            var serializer = new DefaultJsonSerializer();
+        json.Should().Be(EXPECTED_JSON);
+    }
 
-            var item = serializer.DeserializeFromString(_expectedJson, typeof(TypeForJsonSerializer)) as TypeForJsonSerializer;
+    [Fact]
+    public static void DeserializeFromStringDeserializesCorrectly()
+    {
+        var serializer = new DefaultJsonSerializer();
 
-            item.Should().NotBeNull();
-            item.Should().BeEquivalentTo(_expectedItem);
-        }
+        var item = serializer.DeserializeFromString(EXPECTED_JSON, typeof(TypeForJsonSerializer)) as TypeForJsonSerializer;
+
+        item.Should().NotBeNull();
+        item.Should().BeEquivalentTo(_expectedItem);
+    }
 
 #pragma warning disable CA1034 // Nested types should not be visible
-        public class TypeForJsonSerializer
+    public class TypeForJsonSerializer
 #pragma warning restore CA1034 // Nested types should not be visible
-        {
-            public int PropA { get; set; }
-            public bool PropB { get; set; }
-            public string? PropC { get; set; }
-        }
+    {
+        public int PropA { get; set; }
+        public bool PropB { get; set; }
+        public string? PropC { get; set; }
     }
 }

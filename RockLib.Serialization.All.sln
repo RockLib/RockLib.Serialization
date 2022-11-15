@@ -21,11 +21,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{B2
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FC13384D-B17F-42F1-AFFC-9777269B1EC0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DataContract", "Examples\Example.Serialization.DataContract.DotNetCore\Example.Serialization.DataContract.csproj", "{430A4385-EFFF-4315-8246-536E538B50C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.DataContract", "Examples\Example.Serialization.DataContract\Example.Serialization.DataContract.csproj", "{430A4385-EFFF-4315-8246-536E538B50C1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization", "Examples\Example.Serialization.DotNetCore\Example.Serialization.csproj", "{3D442F23-8463-484A-9FE2-B41FAB901159}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization", "Examples\Example.Serialization\Example.Serialization.csproj", "{3D442F23-8463-484A-9FE2-B41FAB901159}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.XSerializer.DotNetCore", "Examples\Example.Serialization.XSerializer.DotNetCore\Example.Serialization.XSerializer.DotNetCore.csproj", "{066DAE74-E6E6-4CE8-B881-B66C3124364E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example.Serialization.XSerializer.DotNetCore", "Examples\Example.Serialization.XSerializer\Example.Serialization.XSerializer.csproj", "{066DAE74-E6E6-4CE8-B881-B66C3124364E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RockLib.Serialization.DataContract.Tests", "Tests\RockLib.Serialization.DataContract.Tests\RockLib.Serialization.DataContract.Tests.csproj", "{381B561B-DAF8-454E-8E43-C310694EA6EE}"
 EndProject
