@@ -2,7 +2,13 @@
 sidebar_position: 3
 ---
 
-# How to configure and use named serializers
+# :warning: Deprecation Warning :warning:
+
+This library has been deprecated and will no longer receive updates.
+
+---
+
+## How to configure and use named serializers
 
 If an application needs to use different serializers depending on the scenario, then _named serializers_ are used. By default, serializers are named "default", so named serializers should given any name other than "default". To serialize or deserialize with a named serializer, pass a value for the optional `name` parameter in the `ToJson`, `FromJson`, `ToXml`, or `FromXml` extension methods.
 

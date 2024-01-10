@@ -2,7 +2,13 @@
 sidebar_position: 2
 ---
 
-# How to configure serializers
+# :warning: Deprecation Warning :warning:
+
+This library has been deprecated and will no longer receive updates.
+
+---
+
+## How to configure serializers
 
 By default, JSON serialization is done by an instance of `DefaultJsonSerializer` and XML serialization is done by an instance of `DefaultXmlSerializer`, where each is constructed with no optional parameters provided. [See below](#default-serializers) for details on these serializers.
 

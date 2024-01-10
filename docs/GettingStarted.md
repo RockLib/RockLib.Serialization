@@ -2,7 +2,13 @@
 sidebar_position: 1
 ---
 
-# Getting Started
+# :warning: Deprecation Warning :warning:
+
+This library has been deprecated and will no longer receive updates.
+
+---
+
+## Getting Started
 
 In this tutorial, we will be building a console application that writes a serialized `Person` object to console as JSON and XML. It then deserializes the JSON and XML back into `Person` objects and verifies that their values are the same.
 
