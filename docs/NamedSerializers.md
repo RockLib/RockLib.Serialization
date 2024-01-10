@@ -1,5 +1,6 @@
 ---
 sidebar_position: 3
+sidebar_label: How to configure and use named serializers
 ---
 
 # :warning: Deprecation Warning :warning:
